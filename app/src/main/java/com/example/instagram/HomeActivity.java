@@ -14,6 +14,9 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,11 +39,35 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private static final String imagePath="./src/androidTest/ic_launcher.png";
+    private static final String imagePath = "./src/androidTest/ic_launcher.png";
     private EditText etDescription;
     private Button btCreate;
     private Button btRefresh;
     private Button btCamera;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.settings_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int menuId = item.getItemId();
+        switch (menuId) {
+            case R.id.action_settings:
+                Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.logout:
+                logoutUser();
+                gotoLoginActivity();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -235,5 +262,10 @@ public class HomeActivity extends AppCompatActivity {
     private void gotoLoginActivity() {
         Intent i = new Intent(HomeActivity.this, LoginActivity.class);
         startActivity(i);
+        finish();
+    }
+
+    private void logoutUser() {
+        ParseUser.logOut();
     }
 }
