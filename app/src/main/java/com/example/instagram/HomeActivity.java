@@ -46,6 +46,13 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        // TODO figure out where this goes
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser == null) {
+            gotoLoginActivity();
+        }
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -223,5 +230,10 @@ public class HomeActivity extends AppCompatActivity {
                 Toast.makeText(this, "picture not taken", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void gotoLoginActivity() {
+        Intent i = new Intent(HomeActivity.this, LoginActivity.class);
+        startActivity(i);
     }
 }
