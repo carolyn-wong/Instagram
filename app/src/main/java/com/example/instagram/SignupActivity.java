@@ -19,7 +19,7 @@ public class SignupActivity extends AppCompatActivity {
     private TextView tvPassword;
     private TextView tvEmail;
     private TextView tvHandle;
-    private Button btSignup;
+    private Button btSignUp;
     private String username;
     private String password;
 
@@ -33,9 +33,9 @@ public class SignupActivity extends AppCompatActivity {
         tvPassword = (TextView) findViewById(R.id.tvPassword);
         tvEmail = (TextView) findViewById(R.id.tvEmail);
         tvHandle = (TextView) findViewById(R.id.tvHandle);
-        btSignup = (Button) findViewById(R.id.btSignup);
+        btSignUp = (Button) findViewById(R.id.btSignUp);
 
-        btSignup.setOnClickListener(new View.OnClickListener() {
+        btSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signUpUser();

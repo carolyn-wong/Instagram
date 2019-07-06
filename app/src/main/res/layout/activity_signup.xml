@@ -79,7 +79,7 @@
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:id="@+id/btSignup"
+        android:id="@+id/btSignUp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
