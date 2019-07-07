@@ -24,14 +24,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.instagram.models.Post;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
-import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -41,7 +39,6 @@ public class HomeActivity extends AppCompatActivity {
     private Button btCamera;
     private ImageView ivPreview;
 
-    private static final String imagePath = "./src/androidTest/ic_launcher.png";
     private final String TAG = "HomeActivity";
     public final static int CAPTURE_IMAGE_REQUEST_CODE = 1;
     public String photoFileName = "photo.jpg";
@@ -116,7 +113,8 @@ public class HomeActivity extends AppCompatActivity {
         btRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadTopPosts();
+                Intent i = new Intent(HomeActivity.this, TimelineActivity.class);
+                startActivity(i);
             }
         });
 
@@ -145,26 +143,6 @@ public class HomeActivity extends AppCompatActivity {
                     Log.d("HomeActivity", "Error while saving");
                     e.printStackTrace();
                     return;
-                }
-            }
-        });
-    }
-
-    private void loadTopPosts() {
-        final Post.Query postsQuery = new Post.Query();
-        postsQuery.getTop().withUser();
-
-        postsQuery.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> objects, ParseException e) {
-                if (e == null) {
-                    for (int i = 0; i < objects.size(); ++i) {
-                        Log.d("HomeActivity", "Post[" + i + "] = "
-                                + objects.get(i).getDescription()
-                                + "\nusername = " + objects.get(i).getUser().getUsername());
-                    }
-                } else {
-                    e.printStackTrace();
                 }
             }
         });

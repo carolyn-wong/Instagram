@@ -5,4 +5,8 @@
     <string name="log_out">Log out</string>
     <string name="no_account">Don\'t have an account?</string>
     <string name="bt_create_account">Create account</string>
+    <string name="post_username">Username</string>
+    <string name="post_description">Description</string>
+    <string name="post_handle">Handle</string>
+    <string name="post_created">CreatedAt</string>
 </resources>

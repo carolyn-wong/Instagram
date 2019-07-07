@@ -15,12 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SettingsActivity"
+        <activity android:name=".PostDetails"></activity>
+        <activity android:name=".TimelineActivity" />
+        <activity
+            android:name=".SettingsActivity"
             android:label="@string/action_settings"
             android:parentActivityName=".HomeActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity"/>
+                android:value=".HomeActivity" />
         </activity>
         <activity android:name=".SignupActivity" />
         <activity
@@ -33,8 +36,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <!--declare app as a FileProvider-->
+        </activity> <!-- declare app as a FileProvider -->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.codepath.fileprovider"
