@@ -87,17 +87,16 @@ public class TimelineActivity extends AppCompatActivity {
                                 + "\nusername = " + objects.get(i).getUser().getUsername());
                         posts.add(objects.get(i));
                         postAdapter.notifyItemInserted(posts.size() - 1);
+                        // on successful reload, signal that refresh has completed
+                        swipeContainer.setRefreshing(false);
                     }
                 } else {
                     e.printStackTrace();
                 }
                 progressBar.setVisibility(View.INVISIBLE);
-                // on successful reload, signal that refresh has completed
-                swipeContainer.setRefreshing(false);
             }
         });
     }
-
-
-
 }
+
+

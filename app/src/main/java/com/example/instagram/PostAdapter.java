@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.instagram.models.Post;
+import com.example.instagram.models.TimeFormatter;
 
 import java.util.List;
 
@@ -56,7 +58,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         // populate views according to data
 //        holder.tvUsername.setText(post.getUser());
 //        holder.tvHandle.setText(post.get);
-//        holder.tvCreatedAt.setText(post.getCreatedAt());
+        holder.tvCreatedAt.setText(TimeFormatter.getTimeDifference(post.getCreatedAt().toString()));
         holder.tvDescription.setText(post.getDescription());
 
         Glide.with(context)
@@ -71,6 +73,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     }
 
     // create ViewHolder class
+    // TODO SET VECTOR DRAWABLES FOR LIKES
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView (R.id.ivProfileImage) public ImageView ivProfileImage;
         @BindView (R.id.tvUsername) public TextView tvUsername;
@@ -87,7 +90,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-//            itemView.setOnClickListener(this);
+            itemView.setOnClickListener(this);
 //            ivLike.setOnClickListener(this);
         }
 
@@ -96,9 +99,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             int position = getAdapterPosition();
             // ensure position valid (exists in view)
             if (position != RecyclerView.NO_POSITION) {
+                Log.d("PostAdapter", "View Post Details");
                 Post post = mPosts.get(position);
                 Intent intent = new Intent(context, PostDetails.class);
-                // TODO put intent extra to indicate post to display
+                intent.putExtra("post_id", post.getObjectId());
                 context.startActivity(intent);
             }
         }
