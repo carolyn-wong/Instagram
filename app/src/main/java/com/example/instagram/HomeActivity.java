@@ -30,20 +30,22 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    private static final String imagePath = "./src/androidTest/ic_launcher.png";
     private EditText etDescription;
-    private Button btCreate;
+    private Button btPost;
     private Button btRefresh;
     private Button btCamera;
+    private ImageView ivPreview;
+
+    private static final String imagePath = "./src/androidTest/ic_launcher.png";
+    private final String TAG = "HomeActivity";
+    public final static int CAPTURE_IMAGE_REQUEST_CODE = 1;
+    public String photoFileName = "photo.jpg";
+    private File photoFile;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -93,20 +95,21 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         etDescription = findViewById(R.id.etDescription);
-        btCreate = findViewById(R.id.btCreate);
+        btPost = findViewById(R.id.btPost);
         btRefresh = findViewById(R.id.btRefresh);
         btCamera = findViewById(R.id.btCamera);
 
-        btCreate.setOnClickListener(new View.OnClickListener() {
+        btPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String description = etDescription.getText().toString();
                 final ParseUser user = ParseUser.getCurrentUser();
-
-                final File file = new File(imagePath);
-                final ParseFile parseFile = new ParseFile(file);
-
-                createPost(description, parseFile, user);
+                if (photoFile == null || ivPreview.getDrawable() == null) {
+                    Log.e(TAG, "No photo to submit");
+                    Toast.makeText(HomeActivity.this, "No photo submitted", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                createPost(description, photoFile, user);
             }
         });
 
@@ -120,15 +123,15 @@ public class HomeActivity extends AppCompatActivity {
         btCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onLaunchCamera(v);
+                launchCamera(v);
             }
         });
     }
 
-    private void createPost(String description, ParseFile imageFile, ParseUser user) {
+    private void createPost(String description, File photoFile, ParseUser user) {
         final Post newPost = new Post();
         newPost.setDescription(description);
-        newPost.setImage(imageFile);
+        newPost.setImage(new ParseFile(photoFile));
         newPost.setUser(user);
 
         newPost.saveInBackground(new SaveCallback() {
@@ -136,8 +139,12 @@ public class HomeActivity extends AppCompatActivity {
             public void done(ParseException e) {
                 if (e == null) {
                     Log.d("HomeActivity", "Create post successful");
+                    etDescription.setText("");
+                    ivPreview.setImageResource(0);
                 } else {
+                    Log.d("HomeActivity", "Error while saving");
                     e.printStackTrace();
+                    return;
                 }
             }
         });
@@ -163,12 +170,7 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    public final String APP_TAG = "Instagram";
-    public final static int CAPTURE_IMAGE_REQUEST_CODE = 1;
-    public String photoFileName = "photo.jpg";
-    File photoFile;
-
-    public void onLaunchCamera(View view) {
+    public void launchCamera(View view) {
         // create intent to take pic and return control to calling app
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // create File reference for future access
@@ -191,11 +193,11 @@ public class HomeActivity extends AppCompatActivity {
         // get safe storage directory for photos
         // 'getExternalFileDir' on Context to access package-specific directories
         // so don't need to request external read/write runtime permissions
-        File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
+        File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), TAG);
 
         // create storage directory if doesn't exist
         if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()) {
-            Log.d(APP_TAG, "Failed to create directory");
+            Log.d(TAG, "Failed to create directory");
         }
 
         // Return file target for photo based on filename
@@ -216,45 +218,44 @@ public class HomeActivity extends AppCompatActivity {
                 // Resize a Bitmap maintaining aspect ratio based on screen width
                 Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, screenWidth);
                 // load image into a preview
-                ImageView ivPreview = (ImageView) findViewById(R.id.ivPreview);
+                ivPreview = (ImageView) findViewById(R.id.ivPreview);
                 ivPreview.setImageBitmap(resizedBitmap);
 
-                // write smaller bitmap back to disk
-                // Configure byte output stream
-                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-                // Compress the image further
-                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
-                // Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
-                File resizedFile = getPhotoFileUri(photoFileName + "_resized");
-                try {
-                    resizedFile.createNewFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                FileOutputStream fos = null;
-                try {
-                    fos = new FileOutputStream(resizedFile);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                // Write the bytes of the bitmap to file
-                try {
-                    fos.write(bytes.toByteArray());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                // Previous code for full size bitmap here:
-                // camera photo already on disk
-                // Bitmap takenImage = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                // TODO fix image rotation
+                // TODO fix saving smaller bitmap to disk
+//                // write smaller bitmap back to disk
+//                // Configure byte output stream
+//                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//                // Compress the image further
+//                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
+//                // Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
+//                File resizedFile = getPhotoFileUri(photoFileName + "_resized");
+//                try {
+//                    resizedFile.createNewFile();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                FileOutputStream fos = null;
+//                try {
+//                    fos = new FileOutputStream(resizedFile);
+//                } catch (FileNotFoundException e) {
+//                    e.printStackTrace();
+//                }
+//                // Write the bytes of the bitmap to file
+//                try {
+//                    fos.write(bytes.toByteArray());
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                try {
+//                    fos.close();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
             }
             // result failed
             else {
-                Toast.makeText(this, "picture not taken", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Picture not taken", Toast.LENGTH_SHORT).show();
             }
         }
     }

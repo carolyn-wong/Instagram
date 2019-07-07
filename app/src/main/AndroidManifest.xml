@@ -34,7 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <!--declare app as a FileProvider-->
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.codepath.fileprovider"
