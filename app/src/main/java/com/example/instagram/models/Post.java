@@ -9,9 +9,11 @@ import com.parse.ParseUser;
 // class name must match Parse class
 @ParseClassName("Post")
 public class Post extends ParseObject {
-    private static final String KEY_DESCRIPTION = "description";
-    private static final String KEY_IMAGE = "image";
-    private static final String KEY_USER = "user";
+    public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_IMAGE = "image";
+    public static final String KEY_USER = "user";
+    public static final String KEY_CREATED_AT = "createdAt";
+
 //    private static final String KEY_MEDIA = "media";
 
     public String getDescription() {
@@ -54,9 +56,10 @@ public class Post extends ParseObject {
             super(Post.class);
         }
 
-        // get first 20 posts
+        // get most recent 20 posts
         public Query getTop() {
             setLimit(20);
+            orderByDescending(KEY_CREATED_AT);
             // builder pattern, allow chain methods
             return this;
         }

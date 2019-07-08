@@ -1,6 +1,5 @@
 package com.example.instagram;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.instagram.models.Post;
 import com.example.instagram.models.TimeFormatter;
+import com.parse.ParseFile;
 
 import java.util.List;
 
@@ -21,19 +21,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
+public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapter.ViewHolder>{
 
-    private List<Post> mPosts;
-    private Activity mContext;
+    private List<Post> posts;
     private final String KEY_PROFILE_IMAGE = "profileImage";
-
     // context defined as global variable so Glide in onBindViewHolder has access
     Context context;
 
     // pass Tweets array in constructor
-    public PostAdapter(Activity context, List<Post> posts) {
-        mContext = context;
-        mPosts = posts;
+    public TimelinePostAdapter(Context context, List<Post> posts) {
+        this.context = context;
+        this.posts = posts;
     }
 
     // for each row, inflate layout and cache references into ViewHolder
@@ -41,41 +39,22 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     // method invoked only when creating a new row
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int ViewType) {
-        // inflate layout, need to get context first
-        context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-
         View postView = inflater.inflate(R.layout.item_post, parent, false);
-        // create ViewHolder
-        ViewHolder viewHolder = new ViewHolder(postView);
-        return viewHolder;
+        return new ViewHolder(postView);
     }
 
     // bind values based on element position
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         // get data according to position
-        Post post = mPosts.get(position);
-
-        // populate views according to data
-        holder.tvUsername.setText(post.getUser().getUsername());
-        holder.tvUsername2.setText(post.getUser().getUsername());
-        holder.tvCreatedAt.setText(TimeFormatter.getTimeDifference(post.getCreatedAt().toString()));
-        holder.tvDescription.setText(post.getDescription());
-
-        Glide.with(context)
-                .load(post.getImage().getUrl())
-                .into(holder.ivPostImage);
-
-        // TODO modify this to get a single command for profile image so don't have to keep defining KEY_PROFILE_IMAGE
-        Glide.with(context)
-                .load(post.getUser().getParseFile(KEY_PROFILE_IMAGE).getUrl())
-                .into(holder.ivProfileImage);
+        Post post = posts.get(position);
+        holder.bind(post);
     }
 
     @Override
     public int getItemCount() {
-        return mPosts.size();
+        return posts.size();
     }
 
     // create ViewHolder class
@@ -100,13 +79,34 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 //            ivLike.setOnClickListener(this);
         }
 
+        public void bind(Post post) {
+            // populate views according to data
+            tvUsername.setText(post.getUser().getUsername());
+            tvUsername2.setText(post.getUser().getUsername());
+            tvCreatedAt.setText(TimeFormatter.getTimeDifference(post.getCreatedAt().toString()));
+            tvDescription.setText(post.getDescription());
+            ParseFile postImage = post.getImage();
+            if (postImage != null) {
+                Glide.with(context)
+                        .load(postImage.getUrl())
+                        .into(ivPostImage);
+            }
+            ParseFile profileImage = post.getUser().getParseFile(KEY_PROFILE_IMAGE);
+            // TODO modify this to get a single command for profile image so don't have to keep defining KEY_PROFILE_IMAGE
+            if (profileImage != null) {
+                Glide.with(context)
+                        .load(profileImage.getUrl())
+                        .into(ivProfileImage);
+            }
+        }
+
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
             // ensure position valid (exists in view)
             if (position != RecyclerView.NO_POSITION) {
                 Log.d("PostAdapter", "View Post Details");
-                Post post = mPosts.get(position);
+                Post post = posts.get(position);
                 Intent intent = new Intent(context, PostDetails.class);
                 intent.putExtra("post_id", post.getObjectId());
                 context.startActivity(intent);
@@ -123,13 +123,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     // RecyclerView adapter helper methods to clear items from or add items to underlying dataset
     // clean recycler elements
     public void clear() {
-        mPosts.clear();
+        posts.clear();
         notifyDataSetChanged();
     }
 
     // add list of posts - change list type depending on item type used
     public void addAll(List<Post> list) {
-        mPosts.addAll(list);
+        posts.addAll(list);
         notifyDataSetChanged();
     }
 }
