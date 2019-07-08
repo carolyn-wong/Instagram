@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
                     Log.d("LoginActivity", "Login successful");
                     // start home activity
                     // since inside callback, use LoginActivity as context
-                    final Intent intent = new Intent(LoginActivity.this, CreatePostActivity.class);
+                    final Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(intent);
                     // finish activity, otherwise user can login again by pressing back
                     finish();
@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void gotoHomeActivity() {
-        Intent i = new Intent(LoginActivity.this, CreatePostActivity.class);
+        Intent i = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(i);
     }
 }

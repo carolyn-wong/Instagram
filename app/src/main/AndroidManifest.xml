@@ -21,14 +21,14 @@
         <activity
             android:name=".SettingsActivity"
             android:label="@string/action_settings"
-            android:parentActivityName=".CreatePostActivity">
+            android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".CreatePostActivity" />
+                android:value=".MainActivity" />
         </activity>
         <activity android:name=".SignupActivity" />
         <activity
-            android:name=".CreatePostActivity" />
+            android:name=".MainActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
