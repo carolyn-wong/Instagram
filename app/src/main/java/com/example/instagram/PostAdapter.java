@@ -66,6 +66,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
                 .load(post.getImage().getUrl())
                 .into(holder.ivPostImage);
 
+        // TODO modify this to get a single command for profile image so don't have to keep defining KEY_PROFILE_IMAGE
         Glide.with(context)
                 .load(post.getUser().getParseFile(KEY_PROFILE_IMAGE).getUrl())
                 .into(holder.ivProfileImage);

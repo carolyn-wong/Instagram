@@ -49,7 +49,7 @@ public class PostDetails extends AppCompatActivity {
             @Override
             public void done(Post post, ParseException e) {
                 if (e == null) {
-                    // TODO FIX IMAGE DOESN'T  LOAD
+                    // TODO FIX IMAGE DOESN'T LOAD
                     tvUsername.setText(post.getUser().getUsername());
                     tvUsername2.setText(post.getUser().getUsername());
                     tvDescription.setText(post.getDescription());
