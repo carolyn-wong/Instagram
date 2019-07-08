@@ -36,6 +36,7 @@ public class PostDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_post_details);
         ButterKnife.bind(this);
+        progressBar.setVisibility(View.VISIBLE);
 
         String postId = getIntent().getStringExtra("post_id");
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);

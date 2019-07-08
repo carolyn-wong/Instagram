@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.instagram.models.Post;
@@ -31,13 +32,19 @@ import com.parse.SaveCallback;
 
 import java.io.File;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class HomeActivity extends AppCompatActivity {
 
-    private EditText etDescription;
-    private Button btPost;
-    private Button btRefresh;
-    private Button btCamera;
-    private ImageView ivPreview;
+    @BindView (R.id.etDescription) EditText etDescription;
+    @BindView (R.id.btPost) Button btPost;
+    @BindView (R.id.btRefresh) Button btRefresh;
+    @BindView (R.id.btCamera) Button btCamera;
+    @BindView (R.id.ivPreview) ImageView ivPreview;
+    @BindView (R.id.progressBar) ProgressBar progressBar;
+    @BindView (R.id.toolbar) Toolbar toolbar;
+    @BindView (R.id.fab) FloatingActionButton fab;
 
     private final String TAG = "HomeActivity";
     public final static int CAPTURE_IMAGE_REQUEST_CODE = 1;
@@ -72,6 +79,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        ButterKnife.bind(this);
 
         // TODO figure out where this goes
         ParseUser currentUser = ParseUser.getCurrentUser();
@@ -79,10 +87,8 @@ public class HomeActivity extends AppCompatActivity {
             gotoLoginActivity();
         }
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -91,10 +97,6 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        etDescription = findViewById(R.id.etDescription);
-        btPost = findViewById(R.id.btPost);
-        btRefresh = findViewById(R.id.btRefresh);
-        btCamera = findViewById(R.id.btCamera);
 
         btPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +133,7 @@ public class HomeActivity extends AppCompatActivity {
         newPost.setDescription(description);
         newPost.setImage(new ParseFile(photoFile));
         newPost.setUser(user);
+        progressBar.setVisibility(View.VISIBLE);
 
         newPost.saveInBackground(new SaveCallback() {
             @Override
@@ -144,6 +147,8 @@ public class HomeActivity extends AppCompatActivity {
                     e.printStackTrace();
                     return;
                 }
+                progressBar.setVisibility(View.INVISIBLE);
+
             }
         });
     }
