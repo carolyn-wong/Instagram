@@ -15,19 +15,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".PostDetails"></activity>
+        <activity android:name=".ProfileActivity"></activity>
+        <activity android:name=".PostDetails" />
         <activity android:name=".TimelineActivity" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/action_settings"
-            android:parentActivityName=".HomeActivity">
+            android:parentActivityName=".CreatePostActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".HomeActivity" />
+                android:value=".CreatePostActivity" />
         </activity>
         <activity android:name=".SignupActivity" />
         <activity
-            android:name=".HomeActivity"
+            android:name=".CreatePostActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".LoginActivity">

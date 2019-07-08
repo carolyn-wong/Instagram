@@ -56,8 +56,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         Post post = mPosts.get(position);
 
         // populate views according to data
-//        holder.tvUsername.setText(post.getUser());
-//        holder.tvHandle.setText(post.get);
+        holder.tvUsername.setText(post.getUser().getUsername());
+        holder.tvUsername2.setText(post.getUser().getUsername());
         holder.tvCreatedAt.setText(TimeFormatter.getTimeDifference(post.getCreatedAt().toString()));
         holder.tvDescription.setText(post.getDescription());
 
@@ -78,10 +78,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         @BindView (R.id.ivProfileImage) public ImageView ivProfileImage;
         @BindView (R.id.tvUsername) public TextView tvUsername;
         @BindView (R.id.ivPostImage) public ImageView ivPostImage;
-        @BindView (R.id.tvHandle) public TextView tvHandle;
+        @BindView (R.id.tvUsername2) public TextView tvUsername2;
         @BindView (R.id.tvDescription) public TextView tvDescription;
         @BindView (R.id.tvCreatedAt) public TextView tvCreatedAt;
-        @BindView (R.id.ivLike) ImageView ivLike;
+        @BindView (R.id.ivLike) public ImageView ivLike;
         @BindView (R.id.ivComment) public ImageView ivComment;
         @BindView (R.id.ivDirect) public ImageView ivDirect;
         @BindView (R.id.ivSave) public ImageView ivSave;

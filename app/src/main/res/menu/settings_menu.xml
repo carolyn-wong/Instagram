@@ -12,4 +12,11 @@
         android:title="@string/log_out"
         app:showAsAction="never"
         />
+
+    <item
+        android:id="@+id/profile_photo"
+        android:title="@string/profile_photo"
+        app:showAsAction="never"
+        />
+
 </menu>

@@ -32,7 +32,7 @@ public class SignupActivity extends AppCompatActivity {
         tvUsername = (TextView) findViewById(R.id.tvUsername);
         tvPassword = (TextView) findViewById(R.id.tvPassword);
         tvEmail = (TextView) findViewById(R.id.tvEmail);
-        tvHandle = (TextView) findViewById(R.id.tvHandle);
+        tvHandle = (TextView) findViewById(R.id.tvUsername2);
         btSignUp = (Button) findViewById(R.id.btSignUp);
 
         btSignUp.setOnClickListener(new View.OnClickListener() {
@@ -62,7 +62,7 @@ public class SignupActivity extends AppCompatActivity {
                     ParseUser.logInInBackground(username, password, new LogInCallback() {
                         @Override
                         public void done(ParseUser user, ParseException e) {
-                            Intent i = new Intent(SignupActivity.this, HomeActivity.class);
+                            Intent i = new Intent(SignupActivity.this, CreatePostActivity.class);
                             startActivity(i);
                         }
                     });

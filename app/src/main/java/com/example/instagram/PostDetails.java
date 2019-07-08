@@ -22,7 +22,7 @@ public class PostDetails extends AppCompatActivity {
     @BindView (R.id.ivProfileImage) public ImageView ivProfileImage;
     @BindView (R.id.tvUsername) public TextView tvUsername;
     @BindView (R.id.ivPostImage) public ImageView ivPostImage;
-    @BindView (R.id.tvHandle) public TextView tvHandle;
+    @BindView (R.id.tvUsername2) public TextView tvUsername2;
     @BindView (R.id.tvDescription) public TextView tvDescription;
     @BindView (R.id.tvCreatedAt) public TextView tvCreatedAt;
     @BindView (R.id.ivLike) ImageView ivLike;
@@ -42,14 +42,18 @@ public class PostDetails extends AppCompatActivity {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         // try to find item from cache, otherwise go to network
         query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK); // or CACHE_ONLY
-        query.getInBackground(postId, new GetCallback<Post>() {
+        // query for post with user
+        final Post.Query postQuery = new Post.Query();
+        postQuery.withUser().getInBackground(postId, new GetCallback<Post>() {
             @Override
             public void done(Post post, ParseException e) {
                 if (e == null) {
-                    // TODO FIX IMAGE DOESN'T ALWAYS LOAD
+                    // TODO FIX IMAGE DOESN'T  LOAD
+                    tvUsername.setText(post.getUser().getUsername());
+                    tvUsername2.setText(post.getUser().getUsername());
                     tvDescription.setText(post.getDescription());
                     tvCreatedAt.setText(TimeFormatter.getTimeDifference(post.getCreatedAt().toString()));
-                    Glide.with(getApplicationContext())
+                    Glide.with(getBaseContext())
                             .load(post.getImage().getUrl())
                             .into(ivPostImage);
                 }

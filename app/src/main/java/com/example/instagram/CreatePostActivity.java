@@ -35,18 +35,18 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity {
+public class CreatePostActivity extends AppCompatActivity {
 
     @BindView (R.id.etDescription) EditText etDescription;
-    @BindView (R.id.btPost) Button btPost;
+    @BindView (R.id.btSetImage) Button btPost;
     @BindView (R.id.btRefresh) Button btRefresh;
     @BindView (R.id.btCamera) Button btCamera;
-    @BindView (R.id.ivPreview) ImageView ivPreview;
+    @BindView (R.id.ivProfileImage) ImageView ivPreview;
     @BindView (R.id.progressBar) ProgressBar progressBar;
     @BindView (R.id.toolbar) Toolbar toolbar;
     @BindView (R.id.fab) FloatingActionButton fab;
 
-    private final String TAG = "HomeActivity";
+    private final String TAG = "CreatePostActivity";
     public final static int CAPTURE_IMAGE_REQUEST_CODE = 1;
     public String photoFileName = "photo.jpg";
     private File photoFile;
@@ -63,8 +63,12 @@ public class HomeActivity extends AppCompatActivity {
         int menuId = item.getItemId();
         switch (menuId) {
             case R.id.action_settings:
-                Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);
-                startActivity(intent);
+                Intent settingsIntent = new Intent(CreatePostActivity.this, SettingsActivity.class);
+                startActivity(settingsIntent);
+                return true;
+            case R.id.profile_photo:
+                Intent profileIntent = new Intent(CreatePostActivity.this, ProfileActivity.class);
+                startActivity(profileIntent);
                 return true;
             case R.id.logout:
                 logoutUser();
@@ -78,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_create_post);
         ButterKnife.bind(this);
 
         // TODO figure out where this goes
@@ -105,7 +109,7 @@ public class HomeActivity extends AppCompatActivity {
                 final ParseUser user = ParseUser.getCurrentUser();
                 if (photoFile == null || ivPreview.getDrawable() == null) {
                     Log.e(TAG, "No photo to submit");
-                    Toast.makeText(HomeActivity.this, "No photo submitted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CreatePostActivity.this, "No photo submitted", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 createPost(description, photoFile, user);
@@ -115,7 +119,7 @@ public class HomeActivity extends AppCompatActivity {
         btRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(HomeActivity.this, TimelineActivity.class);
+                Intent i = new Intent(CreatePostActivity.this, TimelineActivity.class);
                 startActivity(i);
             }
         });
@@ -139,11 +143,11 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    Log.d("HomeActivity", "Create post successful");
+                    Log.d("CreatePostActivity", "Create post successful");
                     etDescription.setText("");
                     ivPreview.setImageResource(0);
                 } else {
-                    Log.d("HomeActivity", "Error while saving");
+                    Log.d("CreatePostActivity", "Error while saving");
                     e.printStackTrace();
                     return;
                 }
@@ -160,7 +164,7 @@ public class HomeActivity extends AppCompatActivity {
         photoFile = getPhotoFileUri(photoFileName);
 
         // wrap File object into a content provider, required for API >= 24
-        Uri fileProvider = FileProvider.getUriForFile(HomeActivity.this, "com.codepath.fileprovider", photoFile);
+        Uri fileProvider = FileProvider.getUriForFile(CreatePostActivity.this, "com.codepath.fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
         // calling startActivityForResult() using intent that can't be handled by any app causes crash
@@ -201,7 +205,7 @@ public class HomeActivity extends AppCompatActivity {
                 // Resize a Bitmap maintaining aspect ratio based on screen width
                 Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, screenWidth);
                 // load image into a preview
-                ivPreview = (ImageView) findViewById(R.id.ivPreview);
+                ivPreview = (ImageView) findViewById(R.id.ivProfileImage);
                 ivPreview.setImageBitmap(resizedBitmap);
 
                 // TODO fix image rotation
@@ -244,7 +248,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void gotoLoginActivity() {
-        Intent i = new Intent(HomeActivity.this, LoginActivity.class);
+        Intent i = new Intent(CreatePostActivity.this, LoginActivity.class);
         startActivity(i);
         finish();
     }

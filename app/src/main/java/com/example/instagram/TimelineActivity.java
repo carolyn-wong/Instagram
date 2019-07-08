@@ -5,7 +5,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -75,16 +74,13 @@ public class TimelineActivity extends AppCompatActivity {
         final ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
         final Post.Query postsQuery = new Post.Query();
-        postsQuery.getTop().withUser();
+        postsQuery.getTop().withUser().orderByDescending("createdAt");
 
         postsQuery.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> objects, ParseException e) {
                 if (e == null) {
                     for (int i = 0; i < objects.size(); ++i) {
-                        Log.d("HomeActivity", "Post[" + i + "] = "
-                                + objects.get(i).getDescription()
-                                + "\nusername = " + objects.get(i).getUser().getUsername());
                         posts.add(objects.get(i));
                         postAdapter.notifyItemInserted(posts.size() - 1);
                         // on successful reload, signal that refresh has completed
