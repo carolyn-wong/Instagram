@@ -28,7 +28,7 @@ public class ProfileFragment extends TimelineFragment {
                 } else {
                     e.printStackTrace();
                 }
-//                progressBar.setVisibility(View.INVISIBLE);
+//               progressBar.setVisibility(View.INVISIBLE);
             }
         });
     }
