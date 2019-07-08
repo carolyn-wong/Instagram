@@ -32,10 +32,6 @@ The following **stretch** features are implemented:
 * [ ] User can comment on a post and see all comments for each post in the post details screen.
 * [ ] User can like a post and see number of likes for each post in the post details screen.
 
-* [x] User can sign in to Twitter using OAuth login (2 points)
-* [x] User can view the tweets from their home timeline (4 points)
-* [x] User can compose a new tweet (4 points)
-
 The following **additional** features are implemented:
 * [ ] 
 
