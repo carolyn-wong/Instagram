@@ -11,4 +11,7 @@
     <string name="post_description">Description</string>
     <string name="post_handle">Handle</string>
     <string name="post_created">CreatedAt</string>
+    <string name="bottom_menu_home">Home</string>
+    <string name="bottom_menu_compose">Compose</string>
+    <string name="bottom_menu_profile">Profile</string>
 </resources>

@@ -7,12 +7,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,8 +42,9 @@ public class CreatePostActivity extends AppCompatActivity {
     @BindView (R.id.btCamera) Button btCamera;
     @BindView (R.id.ivProfileImage) ImageView ivPreview;
     @BindView (R.id.progressBar) ProgressBar progressBar;
-    @BindView (R.id.toolbar) Toolbar toolbar;
-    @BindView (R.id.fab) FloatingActionButton fab;
+
+    @BindView (R.id.bottom_navigation) BottomNavigationView bottomNavigationView;
+
 
     private final String TAG = "CreatePostActivity";
     public final static int CAPTURE_IMAGE_REQUEST_CODE = 1;
@@ -91,17 +91,6 @@ public class CreatePostActivity extends AppCompatActivity {
             gotoLoginActivity();
         }
 
-        setSupportActionBar(toolbar);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-
         btPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,6 +117,24 @@ public class CreatePostActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 launchCamera(v);
+            }
+        });
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()) {
+                    case R.id.action_home:
+                        // do something here
+                        return true;
+                    case R.id.action_compose:
+                        // do something here
+                        return true;
+                    case R.id.action_profile:
+                        // do something here
+                        return true;
+                    default: return true;
+                }
             }
         });
     }

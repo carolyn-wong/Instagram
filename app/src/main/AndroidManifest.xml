@@ -28,9 +28,7 @@
         </activity>
         <activity android:name=".SignupActivity" />
         <activity
-            android:name=".CreatePostActivity"
-            android:label="@string/title_activity_home"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".CreatePostActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
