@@ -69,7 +69,6 @@ public class TimelineActivity extends AppCompatActivity {
                 getResources().getColor(android.R.color.holo_red_light));
     }
 
-
     private void loadTopPosts() {
         final ProgressBar progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);

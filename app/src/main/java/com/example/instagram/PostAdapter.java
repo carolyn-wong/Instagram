@@ -25,6 +25,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
     private List<Post> mPosts;
     private Activity mContext;
+    private final String KEY_PROFILE_IMAGE = "profileImage";
     // context defined as global variable so Glide in onBindViewHolder has access
     Context context;
 
@@ -65,6 +66,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
                 .load(post.getImage().getUrl())
                 .into(holder.ivPostImage);
 
+        Glide.with(context)
+                .load(post.getUser().getParseFile(KEY_PROFILE_IMAGE).getUrl())
+                .into(holder.ivProfileImage);
     }
 
     @Override

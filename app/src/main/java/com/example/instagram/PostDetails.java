@@ -30,6 +30,7 @@ public class PostDetails extends AppCompatActivity {
     @BindView (R.id.ivDirect) public ImageView ivDirect;
     @BindView (R.id.ivSave) public ImageView ivSave;
     @BindView (R.id.progressBar) public ProgressBar progressBar;
+    private final String KEY_PROFILE_IMAGE = "profileImage";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,9 +54,12 @@ public class PostDetails extends AppCompatActivity {
                     tvUsername2.setText(post.getUser().getUsername());
                     tvDescription.setText(post.getDescription());
                     tvCreatedAt.setText(TimeFormatter.getTimeDifference(post.getCreatedAt().toString()));
-                    Glide.with(getBaseContext())
+                    Glide.with(getApplicationContext())
                             .load(post.getImage().getUrl())
                             .into(ivPostImage);
+                    Glide.with(getApplicationContext())
+                            .load(post.getUser().getParseFile(KEY_PROFILE_IMAGE).getUrl())
+                            .into(ivProfileImage);
                 }
                 else {
                     e.printStackTrace();
