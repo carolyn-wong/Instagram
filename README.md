@@ -26,8 +26,8 @@ The following **stretch** features are implemented:
 * [ ] User can load more posts once he or she reaches the bottom of the feed using infinite scrolling.
 * [x] Show the username and creation time for each post.
 * [x] After the user submits a new post, show an indeterminate progress bar while the post is being uploaded to Parse.
-* [ ] Allow the logged in user to add a profile photo.
-* [ ] Display the profile photo with each post.
+* [x] Allow the logged in user to add a profile photo.
+* [x] Display the profile photo with each post.
 * [ ] Tapping on a post's username or profile photo goes to that user's profile page and shows a grid view of the user's posts.
 * [ ] User can comment on a post and see all comments for each post in the post details screen.
 * [ ] User can like a post and see number of likes for each post in the post details screen.
