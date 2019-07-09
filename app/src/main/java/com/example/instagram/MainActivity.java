@@ -17,6 +17,7 @@ import com.example.instagram.fragments.UserTimelineFragment;
 import com.example.instagram.models.Post;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 import butterknife.BindView;
@@ -102,31 +103,38 @@ public class MainActivity extends AppCompatActivity {
         ParseUser.logOut();
     }
 
+
     public static void addLike(String postId) {
         final Post.Query query = new Post.Query();
         query.getInBackground(postId, new GetCallback<Post>() {
-            public void done(Post post, ParseException e) {
+            public void done(final Post post, ParseException e) {
                 if (e == null) {
-                    post.increment("likes");
+                    ParseUser user = ParseUser.getCurrentUser();
+                    ParseRelation relation = post.getRelation("likes");
+                    relation.add(user);
                     post.saveInBackground();
                 } else {
                     e.printStackTrace();
                 }
             }
         });
+
     }
 
     public static void removeLike(String postId) {
         final Post.Query query = new Post.Query();
         query.getInBackground(postId, new GetCallback<Post>() {
-            public void done(Post post, ParseException e) {
+            public void done(final Post post, ParseException e) {
                 if (e == null) {
-                    post.increment("likes", -1);
+                    ParseUser user = ParseUser.getCurrentUser();
+                    ParseRelation relation = post.getRelation("likes");
+                    relation.remove(user);
                     post.saveInBackground();
                 } else {
                     e.printStackTrace();
                 }
             }
         });
+
     }
 }

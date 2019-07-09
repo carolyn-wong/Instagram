@@ -74,7 +74,7 @@ public class PostDetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (ivLike.isSelected()) {
                     ivLike.setSelected(false);
-                    MainActivity.removeLike(postId);
+//                    MainActivity.removeLike(postId);
                 } else {
                     ivLike.setSelected(true);
                     MainActivity.addLike(postId);
@@ -89,4 +89,6 @@ public class PostDetailsActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

@@ -74,10 +74,19 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
+
             ivLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("LIKE CLICKED", "LIKE LIKE LIKE");
+                    int position = getAdapterPosition();
+                    String postId = posts.get(position).getObjectId();
+                    if (ivLike.isSelected()) {
+                        ivLike.setSelected(false);
+//                        MainActivity.removeLike(postId);
+                    } else {
+                        ivLike.setSelected(true);
+                        MainActivity.addLike(postId);
+                    }
                 }
             });
         }
@@ -95,7 +104,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
                         .into(ivPostImage);
             }
             ParseFile profileImage = post.getUser().getParseFile(KEY_PROFILE_IMAGE);
-            // TODO modify this to get a single command for profile image so don't have to keep defining KEY_PROFILE_IMAGE
             if (profileImage != null) {
                 Glide.with(context)
                         .load(profileImage.getUrl())

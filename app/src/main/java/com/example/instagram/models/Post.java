@@ -52,14 +52,6 @@ public class Post extends ParseObject {
         put(KEY_USER, user);
     }
 
-    public Number getLikes() {
-        return getNumber(KEY_LIKES);
-    }
-
-    public void setLikes(Number number) {
-        put(KEY_LIKES, number);
-    }
-
     // inner class to query post model
     public static class Query extends ParseQuery<Post> {
         //
@@ -85,4 +77,5 @@ public class Post extends ParseObject {
             return this;
         }
     }
+
 }

@@ -3,6 +3,8 @@ package com.example.instagram.fragments;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -21,9 +23,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.instagram.R;
 import com.example.instagram.models.BitmapScaler;
 import com.example.instagram.models.DeviceDimensionsHelper;
-import com.example.instagram.R;
 import com.example.instagram.models.Post;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -31,6 +33,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -127,17 +130,17 @@ public class ComposeFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == CAPTURE_IMAGE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                File takenPhotoUri = getPhotoFileUri(photoFileName);
                 // camera photo on disk
-                Bitmap rawTakenImage = BitmapFactory.decodeFile(takenPhotoUri.getPath());
+                File takenPhotoUri = getPhotoFileUri(photoFileName);
+                // rotate bitmap to correct orientation
+                Bitmap rotatedBitmap = rotateBitmapOrientation(takenPhotoUri.getPath());
                 // Get height or width of screen at runtime
                 int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getContext());
-                // Resize a Bitmap maintaining aspect ratio based on screen width
-                Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rawTakenImage, screenWidth);
+                // Resize rotated bitmap maintaining aspect ratio based on screen width
+                Bitmap resizedBitmap = BitmapScaler.scaleToFitWidth(rotatedBitmap, screenWidth);
                 // load image into a preview
                 ivPostPreview.setImageBitmap(resizedBitmap);
 
-                // TODO fix image rotation
                 // TODO fix saving smaller bitmap to disk
 //                // write smaller bitmap back to disk
 //                // Configure byte output stream
@@ -181,7 +184,6 @@ public class ComposeFragment extends Fragment {
         newPost.setDescription(description);
         newPost.setImage(new ParseFile(photoFile));
         newPost.setUser(user);
-        newPost.setLikes(0);
         progressBar.setVisibility(View.VISIBLE);
 
         newPost.saveInBackground(new SaveCallback() {
@@ -202,10 +204,37 @@ public class ComposeFragment extends Fragment {
         });
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    public Bitmap rotateBitmapOrientation(String photoFilePath) {
+        // Create and configure BitmapFactory
+        BitmapFactory.Options bounds = new BitmapFactory.Options();
+        bounds.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(photoFilePath, bounds);
+        BitmapFactory.Options opts = new BitmapFactory.Options();
+        Bitmap bm = BitmapFactory.decodeFile(photoFilePath, opts);
+        // Read EXIF Data
+        ExifInterface exif = null;
+        try {
+            exif = new ExifInterface(photoFilePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String orientString = exif.getAttribute(ExifInterface.TAG_ORIENTATION);
+        int orientation = orientString != null ? Integer.parseInt(orientString) : ExifInterface.ORIENTATION_NORMAL;
+        int rotationAngle = 0;
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_90) rotationAngle = 90;
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_180) rotationAngle = 180;
+        if (orientation == ExifInterface.ORIENTATION_ROTATE_270) rotationAngle = 270;
+        // Rotate Bitmap
+        Matrix matrix = new Matrix();
+        matrix.setRotate(rotationAngle, (float) bm.getWidth() / 2, (float) bm.getHeight() / 2);
+        Bitmap rotatedBitmap = Bitmap.createBitmap(bm, 0, 0, bounds.outWidth, bounds.outHeight, matrix, true);
+        // Return result
+        return rotatedBitmap;
     }
 }
