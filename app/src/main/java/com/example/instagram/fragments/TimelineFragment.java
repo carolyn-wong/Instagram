@@ -60,9 +60,9 @@ public class TimelineFragment extends Fragment {
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                Date maxPostId = getMaxId();
+                Date maxPostId = getMaxDate();
                 Log.d("DATE", maxPostId.toString());
-                loadTopPosts(getMaxId());
+                loadTopPosts(getMaxDate());
             }
         };
         // add endless scroll listener to RecyclerView
@@ -113,8 +113,8 @@ public class TimelineFragment extends Fragment {
         });
     }
 
-    // get identifier of the oldest post
-    protected Date getMaxId() {
+    // get date of oldest post
+    protected Date getMaxDate() {
         int postsSize = mPosts.size();
         if(postsSize == 0) {
             return(new Date(0));

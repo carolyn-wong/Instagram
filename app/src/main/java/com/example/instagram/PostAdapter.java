@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.instagram.models.Post;
 import com.example.instagram.models.TimeFormatter;
 import com.parse.ParseFile;
@@ -95,6 +96,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             if (profileImage != null) {
                 Glide.with(context)
                         .load(profileImage.getUrl())
+                        .apply(RequestOptions.circleCropTransform())
                         .into(ivProfileImage);
             }
         }

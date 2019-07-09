@@ -47,7 +47,6 @@ public class ComposeFragment extends Fragment {
 
     @BindView (R.id.etDescription) EditText etDescription;
     @BindView (R.id.btSetImage) Button btPost;
-    @BindView (R.id.btRefresh) Button btRefresh;
     @BindView (R.id.btCamera) Button btCamera;
     @BindView (R.id.progressBar) ProgressBar progressBar;
     @BindView (R.id.ivPostPreview) ImageView ivPostPreview;

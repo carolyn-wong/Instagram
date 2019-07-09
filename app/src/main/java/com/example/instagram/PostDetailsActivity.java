@@ -8,6 +8,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.instagram.models.Post;
 import com.example.instagram.models.TimeFormatter;
 import com.parse.GetCallback;
@@ -49,7 +50,6 @@ public class PostDetailsActivity extends AppCompatActivity {
             @Override
             public void done(Post post, ParseException e) {
                 if (e == null) {
-                    // TODO FIX IMAGE DOESN'T LOAD
                     tvUsername.setText(post.getUser().getUsername());
                     tvUsername2.setText(post.getUser().getUsername());
                     tvDescription.setText(post.getDescription());
@@ -59,6 +59,7 @@ public class PostDetailsActivity extends AppCompatActivity {
                             .into(ivPostImage);
                     Glide.with(getApplicationContext())
                             .load(post.getUser().getParseFile(KEY_PROFILE_IMAGE).getUrl())
+                            .apply(RequestOptions.circleCropTransform())
                             .into(ivProfileImage);
                 }
                 else {
