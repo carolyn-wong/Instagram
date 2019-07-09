@@ -18,11 +18,9 @@ public class SignupActivity extends AppCompatActivity {
     private TextView tvUsername;
     private TextView tvPassword;
     private TextView tvEmail;
-    private TextView tvHandle;
     private Button btSignUp;
     private String username;
     private String password;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +30,6 @@ public class SignupActivity extends AppCompatActivity {
         tvUsername = (TextView) findViewById(R.id.tvUsername);
         tvPassword = (TextView) findViewById(R.id.tvPassword);
         tvEmail = (TextView) findViewById(R.id.tvEmail);
-        tvHandle = (TextView) findViewById(R.id.tvUsername2);
         btSignUp = (Button) findViewById(R.id.btSignUp);
 
         btSignUp.setOnClickListener(new View.OnClickListener() {
@@ -52,7 +49,6 @@ public class SignupActivity extends AppCompatActivity {
         user.setUsername(username);
         user.setPassword(password);
         user.setEmail(tvEmail.getText().toString());
-        user.put("handle", tvHandle.getText().toString());
 
         user.signUpInBackground(new SignUpCallback() {
             @Override
