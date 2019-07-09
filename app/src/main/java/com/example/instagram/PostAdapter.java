@@ -20,7 +20,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
@@ -58,7 +57,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     }
 
     // create ViewHolder class
-    // TODO SET VECTOR DRAWABLES FOR LIKES
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         @BindView (R.id.ivProfileImage) public ImageView ivProfileImage;
         @BindView (R.id.tvUsername) public TextView tvUsername;
@@ -76,7 +74,12 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             super(itemView);
             ButterKnife.bind(this, itemView);
             itemView.setOnClickListener(this);
-//            ivLike.setOnClickListener(this);
+            ivLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d("LIKE CLICKED", "LIKE LIKE LIKE");
+                }
+            });
         }
 
         public void bind(Post post) {
@@ -113,12 +116,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
                 context.startActivity(intent);
             }
         }
-
-        @OnClick(R.id.ivLike)
-        public void onClickLike() {
-
-        }
-
     }
 
     // RecyclerView adapter helper methods to clear items from or add items to underlying dataset

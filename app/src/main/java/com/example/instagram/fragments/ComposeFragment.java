@@ -181,6 +181,7 @@ public class ComposeFragment extends Fragment {
         newPost.setDescription(description);
         newPost.setImage(new ParseFile(photoFile));
         newPost.setUser(user);
+        newPost.setLikes(0);
         progressBar.setVisibility(View.VISIBLE);
 
         newPost.saveInBackground(new SaveCallback() {

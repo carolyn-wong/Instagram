@@ -15,6 +15,7 @@ public class Post extends ParseObject {
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
     public static final String KEY_CREATED_AT = "createdAt";
+    public static final String KEY_LIKES = "likes";
 
 //    private static final String KEY_MEDIA = "media";
 
@@ -50,6 +51,15 @@ public class Post extends ParseObject {
     public void setUser(ParseUser user) {
         put(KEY_USER, user);
     }
+
+    public Number getLikes() {
+        return getNumber(KEY_LIKES);
+    }
+
+    public void setLikes(Number number) {
+        put(KEY_LIKES, number);
+    }
+
     // inner class to query post model
     public static class Query extends ParseQuery<Post> {
         //

@@ -40,7 +40,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         progressBar.setVisibility(View.VISIBLE);
 
-        String postId = getIntent().getStringExtra("post_id");
+        final String postId = getIntent().getStringExtra("post_id");
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         // try to find item from cache, otherwise go to network
         query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK); // or CACHE_ONLY
@@ -66,6 +66,26 @@ public class PostDetailsActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 progressBar.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        ivLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ivLike.isSelected()) {
+                    ivLike.setSelected(false);
+                    MainActivity.removeLike(postId);
+                } else {
+                    ivLike.setSelected(true);
+                    MainActivity.addLike(postId);
+                }
+            }
+        });
+
+        ivComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // do something
             }
         });
     }

@@ -14,6 +14,9 @@ import android.view.MenuItem;
 import com.example.instagram.fragments.ComposeFragment;
 import com.example.instagram.fragments.TimelineFragment;
 import com.example.instagram.fragments.UserTimelineFragment;
+import com.example.instagram.models.Post;
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import butterknife.BindView;
@@ -97,5 +100,33 @@ public class MainActivity extends AppCompatActivity {
 
     private void logoutUser() {
         ParseUser.logOut();
+    }
+
+    public static void addLike(String postId) {
+        final Post.Query query = new Post.Query();
+        query.getInBackground(postId, new GetCallback<Post>() {
+            public void done(Post post, ParseException e) {
+                if (e == null) {
+                    post.increment("likes");
+                    post.saveInBackground();
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public static void removeLike(String postId) {
+        final Post.Query query = new Post.Query();
+        query.getInBackground(postId, new GetCallback<Post>() {
+            public void done(Post post, ParseException e) {
+                if (e == null) {
+                    post.increment("likes", -1);
+                    post.saveInBackground();
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }
