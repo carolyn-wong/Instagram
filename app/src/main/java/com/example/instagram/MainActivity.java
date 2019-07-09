@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        // TODO figure out where this goes
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser == null) {
             gotoLoginActivity();
