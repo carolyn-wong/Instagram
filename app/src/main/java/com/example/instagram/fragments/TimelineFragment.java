@@ -12,8 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.example.instagram.PostAdapter;
 import com.example.instagram.R;
-import com.example.instagram.TimelinePostAdapter;
 import com.example.instagram.models.EndlessRecyclerViewScrollListener;
 import com.example.instagram.models.Post;
 import com.parse.FindCallback;
@@ -25,7 +25,7 @@ import java.util.List;
 public class TimelineFragment extends Fragment {
 
     // initialize adapter, views, scroll listener
-    protected TimelinePostAdapter postAdapter;
+    protected PostAdapter postAdapter;
     protected ArrayList<Post> mPosts;
     RecyclerView rvPosts;
     protected SwipeRefreshLayout swipeContainer;
@@ -46,7 +46,7 @@ public class TimelineFragment extends Fragment {
         // initialize data source
         mPosts = new ArrayList<>();
         // construct adapter from data source
-        postAdapter = new TimelinePostAdapter(getContext(), mPosts);
+        postAdapter = new PostAdapter(getContext(), mPosts);
         // RecyclerView setup
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvPosts.setLayoutManager(linearLayoutManager);

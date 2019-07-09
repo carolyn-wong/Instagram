@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapter.ViewHolder>{
+public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
     private List<Post> posts;
     private final String KEY_PROFILE_IMAGE = "profileImage";
@@ -29,7 +29,7 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
     Context context;
 
     // pass Tweets array in constructor
-    public TimelinePostAdapter(Context context, List<Post> posts) {
+    public PostAdapter(Context context, List<Post> posts) {
         this.context = context;
         this.posts = posts;
     }
@@ -104,7 +104,7 @@ public class TimelinePostAdapter extends RecyclerView.Adapter<TimelinePostAdapte
             int position = getAdapterPosition();
             // ensure position valid (exists in view)
             if (position != RecyclerView.NO_POSITION) {
-                Log.d("TimelinePostAdapter", "View Post Details");
+                Log.d("PostAdapter", "View Post Details");
                 Post post = posts.get(position);
                 Intent intent = new Intent(context, PostDetailsActivity.class);
                 intent.putExtra("post_id", post.getObjectId());
