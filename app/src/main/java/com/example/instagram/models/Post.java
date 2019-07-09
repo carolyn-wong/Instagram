@@ -6,6 +6,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.Date;
+
 // class name must match Parse class
 @ParseClassName("Post")
 public class Post extends ParseObject {
@@ -48,12 +50,16 @@ public class Post extends ParseObject {
     public void setUser(ParseUser user) {
         put(KEY_USER, user);
     }
-
     // inner class to query post model
     public static class Query extends ParseQuery<Post> {
         //
         public Query() {
             super(Post.class);
+        }
+
+        public Query getOlder(Date maxId) {
+            whereLessThan("createdAt", maxId);
+            return this;
         }
 
         // get most recent 20 posts

@@ -12,6 +12,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import java.util.Date;
 import java.util.List;
 
 public class UserTimelineFragment extends TimelineFragment {
@@ -24,10 +25,17 @@ public class UserTimelineFragment extends TimelineFragment {
     }
 
     @Override
-    protected void loadTopPosts() {
+    protected void loadTopPosts(Date maxDate) {
         progressBar.setVisibility(View.VISIBLE);
         final Post.Query postsQuery = new Post.Query();
-        postsQuery.getTop().withUser().whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
+        // if opening app for the first time, get top 20 and clear old items
+        // otherwise, query for posts older than the oldest
+        if (maxDate.equals(new Date(0))) {
+            postAdapter.clear();
+            postsQuery.getTop().withUser().whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
+        } else {
+            postsQuery.getOlder(maxDate).getTop().withUser().whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
+        }
         postsQuery.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> objects, ParseException e) {
