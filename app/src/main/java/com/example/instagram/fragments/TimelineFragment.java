@@ -20,6 +20,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class TimelineFragment extends Fragment {
@@ -52,25 +53,25 @@ public class TimelineFragment extends Fragment {
         rvPosts.setLayoutManager(linearLayoutManager);
         rvPosts.setAdapter(postAdapter);
 
-        loadTopPosts();
+        loadTopPosts(new Date(0));
 
-//        // retain instance so can call "resetStates" for fresh searches
-//        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
-//            @Override
-//            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-//                Long maxTweetId = getMaxId();
-//                populateTimeline(maxTweetId);
-//            }
-//        };
-//        // add endless scroll listener to RecyclerView
-//        rvPosts.addOnScrollListener(scrollListener);
+        // retain instance so can call "resetStates" for fresh searches
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Date maxPostId = getMaxId();
+                loadTopPosts(maxPostId);
+            }
+        };
+        // add endless scroll listener to RecyclerView
+        rvPosts.addOnScrollListener(scrollListener);
 
         // set up refresh listener that triggers new data loading
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadTopPosts();
+                loadTopPosts(new Date(0));
             }
         });
         // configure refreshing colors
@@ -80,15 +81,19 @@ public class TimelineFragment extends Fragment {
                 getResources().getColor(android.R.color.holo_red_light));
     }
 
-    protected void loadTopPosts() {
+    protected void loadTopPosts(final Date maxId) {
         progressBar.setVisibility(View.VISIBLE);
         final Post.Query postsQuery = new Post.Query();
-        postsQuery.getTop().withUser();
+        postsQuery.getOlder(maxId).getTop().withUser();
 
         postsQuery.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> objects, ParseException e) {
                 if (e == null) {
+                    // if opening app, clear out old items
+                    if(maxId.equals(new Date(0))) {
+                        postAdapter.clear();
+                    }
                     for (int i = 0; i < objects.size(); ++i) {
                         mPosts.add(objects.get(i));
                         postAdapter.notifyItemInserted(mPosts.size() - 1);
@@ -101,5 +106,17 @@ public class TimelineFragment extends Fragment {
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });
+    }
+
+    // get identifier of the oldest post
+    protected Date getMaxId() {
+        int postsSize = mPosts.size();
+        if(postsSize == 0) {
+            return new Date(0);
+        }
+        else {
+            Post oldest = mPosts.get(mPosts.size() - 1);
+            return oldest.getCreatedAt();
+        }
     }
 }

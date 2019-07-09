@@ -12,6 +12,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
+import java.util.Date;
 import java.util.List;
 
 public class UserTimelineFragment extends TimelineFragment {
@@ -24,7 +25,7 @@ public class UserTimelineFragment extends TimelineFragment {
     }
 
     @Override
-    protected void loadTopPosts() {
+    protected void loadTopPosts(final Date maxId) {
         progressBar.setVisibility(View.VISIBLE);
         final Post.Query postsQuery = new Post.Query();
         postsQuery.getTop().withUser().whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
@@ -32,6 +33,9 @@ public class UserTimelineFragment extends TimelineFragment {
             @Override
             public void done(List<Post> objects, ParseException e) {
                 if (e == null) {
+                    if(maxId.equals(new Date(0))) {
+                        postAdapter.clear();
+                    }
                     for (int i = 0; i < objects.size(); ++i) {
                         mPosts.add(objects.get(i));
                         postAdapter.notifyItemInserted(mPosts.size() - 1);
