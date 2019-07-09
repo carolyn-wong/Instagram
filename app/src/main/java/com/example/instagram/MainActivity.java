@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import com.example.instagram.fragments.ComposeFragment;
 import com.example.instagram.fragments.TimelineFragment;
+import com.example.instagram.fragments.UserTimelineFragment;
 import com.parse.ParseUser;
 
 import butterknife.BindView;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(settingsIntent);
                 return true;
             case R.id.profile_photo:
-                Intent profileIntent = new Intent(MainActivity.this, ProfileActivity.class);
+                Intent profileIntent = new Intent(MainActivity.this, ProfileSettingsActivity.class);
                 startActivity(profileIntent);
                 return true;
             case R.id.logout:
@@ -73,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new ComposeFragment();
                         break;
                     case R.id.action_profile:
-                        fragment = new ProfileFragment();
+                        fragment = new UserTimelineFragment();
                         break;
                     case R.id.action_home:
                     default:
@@ -85,9 +86,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         // Set default selection
-        bottomNavigationView.setSelectedItemId(R.id.action_compose);
+        bottomNavigationView.setSelectedItemId(R.id.action_home);
     }
-
 
 
     private void gotoLoginActivity() {

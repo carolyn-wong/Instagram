@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.instagram.models.BitmapScaler;
+import com.example.instagram.models.DeviceDimensionsHelper;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -27,7 +29,7 @@ import java.io.File;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileSettingsActivity extends AppCompatActivity {
 
     @BindView(R.id.btSetImage) Button btSetImage;
     @BindView(R.id.btCamera) Button btCamera;
@@ -35,7 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.progressBar) ProgressBar progressBar;
     private static final String KEY_PROFILE = "profileImage";
 
-    private final String TAG = "ProfileActivity";
+    private final String TAG = "ProfileSettingsActivity";
     public final static int CAPTURE_IMAGE_REQUEST_CODE = 1;
     public String photoFileName = "photo.jpg";
     private File photoFile;
@@ -43,7 +45,7 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_profile_settings);
         ButterKnife.bind(this);
 
         ParseUser currentUser = ParseUser.getCurrentUser();
@@ -58,7 +60,7 @@ public class ProfileActivity extends AppCompatActivity {
                 final ParseUser user = ParseUser.getCurrentUser();
                 if (photoFile == null || ivProfileImage.getDrawable() == null) {
                     Log.e(TAG, "No photo to submit");
-                    Toast.makeText(ProfileActivity.this, "No photo submitted", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileSettingsActivity.this, "No photo submitted", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 saveProfilePhoto(photoFile, user);
@@ -82,10 +84,10 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    Log.d("ProfileActivity", "Profile photo change successful");
-                    Toast.makeText(ProfileActivity.this, "Photo successfully changed!", Toast.LENGTH_SHORT).show();
+                    Log.d("ProfileSettingsActivity", "Profile photo change successful");
+                    Toast.makeText(ProfileSettingsActivity.this, "Photo successfully changed!", Toast.LENGTH_SHORT).show();
                 } else {
-                    Log.d("ProfileActivity", "Error while saving");
+                    Log.d("ProfileSettingsActivity", "Error while saving");
                     e.printStackTrace();
                     return;
                 }
@@ -99,7 +101,7 @@ public class ProfileActivity extends AppCompatActivity {
         photoFile = getPhotoFileUri(photoFileName);
 
         // wrap File object into a content provider
-        Uri fileProvider = FileProvider.getUriForFile(ProfileActivity.this, "com.codepath.fileprovider", photoFile);
+        Uri fileProvider = FileProvider.getUriForFile(ProfileSettingsActivity.this, "com.codepath.fileprovider", photoFile);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider);
 
         // calling startActivityForResult() using intent that can't be handled by any app causes crash
@@ -183,7 +185,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void gotoLoginActivity() {
-        Intent i = new Intent(ProfileActivity.this, LoginActivity.class);
+        Intent i = new Intent(ProfileSettingsActivity.this, LoginActivity.class);
         startActivity(i);
         finish();
     }

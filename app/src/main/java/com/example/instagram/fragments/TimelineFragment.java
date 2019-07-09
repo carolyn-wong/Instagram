@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.instagram.R;
 import com.example.instagram.TimelinePostAdapter;
@@ -29,6 +30,7 @@ public class TimelineFragment extends Fragment {
     RecyclerView rvPosts;
     protected SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
+    private ProgressBar progressBar;
 
     @Nullable
     @Override
@@ -38,6 +40,7 @@ public class TimelineFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         rvPosts = (RecyclerView) view.findViewById(R.id.rvPost);
 
         // initialize data source
@@ -78,8 +81,7 @@ public class TimelineFragment extends Fragment {
     }
 
     protected void loadTopPosts() {
-//        final ProgressBar progressBar = view.findViewById(R.id.progressBar);
-//        progressBar.setVisibility(View.VISIBLE);
+        progressBar.setVisibility(View.VISIBLE);
         final Post.Query postsQuery = new Post.Query();
         postsQuery.getTop().withUser();
 
@@ -96,7 +98,7 @@ public class TimelineFragment extends Fragment {
                 } else {
                     e.printStackTrace();
                 }
-//                progressBar.setVisibility(View.INVISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
     }

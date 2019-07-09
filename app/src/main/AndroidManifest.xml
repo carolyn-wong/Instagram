@@ -15,9 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ProfileActivity"></activity>
-        <activity android:name=".PostDetails" />
-        <activity android:name=".TimelineActivity" />
+        <activity android:name=".ProfileSettingsActivity"></activity>
+        <activity android:name=".PostDetailsActivity" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/action_settings"

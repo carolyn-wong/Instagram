@@ -17,7 +17,7 @@ import com.parse.ParseQuery;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PostDetails extends AppCompatActivity {
+public class PostDetailsActivity extends AppCompatActivity {
 
     @BindView (R.id.ivProfileImage) public ImageView ivProfileImage;
     @BindView (R.id.tvUsername) public TextView tvUsername;
