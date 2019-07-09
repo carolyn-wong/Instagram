@@ -33,7 +33,7 @@ The following **stretch** features are implemented:
 * [ ] User can like a post and see number of likes for each post in the post details screen.
 
 The following **additional** features are implemented:
-* [ ] 
+* [x] Show an indeterminate progress bar while loading home and user timelines.
 
 ## Video Walkthrough
 
