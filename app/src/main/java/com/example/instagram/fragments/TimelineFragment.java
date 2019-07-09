@@ -7,13 +7,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.instagram.R;
-import com.example.instagram.TimelinePostAdapter;
+import com.example.instagram.PostAdapter;
 import com.example.instagram.models.EndlessRecyclerViewScrollListener;
 import com.example.instagram.models.Post;
 import com.parse.FindCallback;
@@ -26,7 +27,7 @@ import java.util.List;
 public class TimelineFragment extends Fragment {
 
     // initialize adapter, views, scroll listener
-    protected TimelinePostAdapter postAdapter;
+    protected PostAdapter postAdapter;
     protected ArrayList<Post> mPosts;
     RecyclerView rvPosts;
     protected SwipeRefreshLayout swipeContainer;
@@ -47,7 +48,7 @@ public class TimelineFragment extends Fragment {
         // initialize data source
         mPosts = new ArrayList<>();
         // construct adapter from data source
-        postAdapter = new TimelinePostAdapter(getContext(), mPosts);
+        postAdapter = new PostAdapter(getContext(), mPosts);
         // RecyclerView setup
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         rvPosts.setLayoutManager(linearLayoutManager);
@@ -60,7 +61,8 @@ public class TimelineFragment extends Fragment {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 Date maxPostId = getMaxId();
-                loadTopPosts(maxPostId);
+                Log.d("DATE", maxPostId.toString());
+                loadTopPosts(getMaxId());
             }
         };
         // add endless scroll listener to RecyclerView
@@ -81,19 +83,22 @@ public class TimelineFragment extends Fragment {
                 getResources().getColor(android.R.color.holo_red_light));
     }
 
-    protected void loadTopPosts(final Date maxId) {
+    protected void loadTopPosts(Date maxDate) {
         progressBar.setVisibility(View.VISIBLE);
         final Post.Query postsQuery = new Post.Query();
-        postsQuery.getOlder(maxId).getTop().withUser();
+        // if opening app for the first time, get top 20 and clear old items
+        // otherwise, query for posts older than the oldest
+        if (maxDate.equals(new Date(0))) {
+            postAdapter.clear();
+            postsQuery.getTop().withUser();
+        } else {
+            postsQuery.getOlder(maxDate).getTop().withUser();
+        }
 
         postsQuery.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> objects, ParseException e) {
                 if (e == null) {
-                    // if opening app, clear out old items
-                    if(maxId.equals(new Date(0))) {
-                        postAdapter.clear();
-                    }
                     for (int i = 0; i < objects.size(); ++i) {
                         mPosts.add(objects.get(i));
                         postAdapter.notifyItemInserted(mPosts.size() - 1);
@@ -112,7 +117,7 @@ public class TimelineFragment extends Fragment {
     protected Date getMaxId() {
         int postsSize = mPosts.size();
         if(postsSize == 0) {
-            return new Date(0);
+            return(new Date(0));
         }
         else {
             Post oldest = mPosts.get(mPosts.size() - 1);

@@ -50,9 +50,6 @@ public class Post extends ParseObject {
     public void setUser(ParseUser user) {
         put(KEY_USER, user);
     }
-
-    public Date getCreatedAt() { return getDate(KEY_CREATED_AT); }
-
     // inner class to query post model
     public static class Query extends ParseQuery<Post> {
         //
@@ -61,11 +58,7 @@ public class Post extends ParseObject {
         }
 
         public Query getOlder(Date maxId) {
-            if (maxId.equals(new Date(0))) {
-                //
-            } else {
-                whereLessThan("createdAt", maxId);
-            }
+            whereLessThan("createdAt", maxId);
             return this;
         }
 
