@@ -110,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
         ParseUser.logOut();
     }
 
-
     public static void addLike(String postId) {
         final Post.Query query = new Post.Query();
         query.getInBackground(postId, new GetCallback<Post>() {
@@ -127,6 +126,27 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public static void addLike(final TextView view, String postId) {
+        final Post.Query query = new Post.Query();
+        query.getInBackground(postId, new GetCallback<Post>() {
+            public void done(final Post post, ParseException e) {
+                if (e == null) {
+                    ParseUser user = ParseUser.getCurrentUser();
+                    ParseRelation relation = post.getRelation("likes");
+                    relation.add(user);
+                    try {
+                        post.save();
+                    } catch (ParseException e1) {
+                        e1.printStackTrace();
+                    }
+                    MainActivity.getNumLikes(view, post);
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     public static void removeLike(String postId) {
         final Post.Query query = new Post.Query();
         query.getInBackground(postId, new GetCallback<Post>() {
@@ -136,6 +156,27 @@ public class MainActivity extends AppCompatActivity {
                     ParseRelation relation = post.getRelation("likes");
                     relation.remove(user);
                     post.saveInBackground();
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public static void removeLike(final TextView view, String postId) {
+        final Post.Query query = new Post.Query();
+        query.getInBackground(postId, new GetCallback<Post>() {
+            public void done(final Post post, ParseException e) {
+                if (e == null) {
+                    ParseUser user = ParseUser.getCurrentUser();
+                    ParseRelation relation = post.getRelation("likes");
+                    relation.remove(user);
+                    try {
+                        post.save();
+                    } catch (ParseException e1) {
+                        e1.printStackTrace();
+                    }
+                    MainActivity.getNumLikes(view, post);
                 } else {
                     e.printStackTrace();
                 }

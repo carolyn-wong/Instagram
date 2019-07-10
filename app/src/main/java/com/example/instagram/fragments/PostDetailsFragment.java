@@ -43,6 +43,7 @@ public class PostDetailsFragment extends Fragment {
     @BindView (R.id.progressBar) public ProgressBar progressBar;
     private final String KEY_PROFILE_IMAGE = "profileImage";
     private String postId;
+    Post displayPost;
 
     private Unbinder unbinder;
 
@@ -69,6 +70,7 @@ public class PostDetailsFragment extends Fragment {
             @Override
             public void done(Post post, ParseException e) {
                 if (e == null) {
+                    displayPost = post;
                     tvUsername.setText(post.getUser().getUsername());
                     tvUsername2.setText(post.getUser().getUsername());
                     tvDescription.setText(post.getDescription());
@@ -90,16 +92,15 @@ public class PostDetailsFragment extends Fragment {
             }
         });
 
-        // TODO set so that "likes" automatically changes when clicking on like button
         ivLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ivLike.isSelected()) {
                     ivLike.setSelected(false);
-                    MainActivity.removeLike(postId);
+                    MainActivity.removeLike(tvNumLikes, postId);
                 } else {
                     ivLike.setSelected(true);
-                    MainActivity.addLike(postId);
+                    MainActivity.addLike(tvNumLikes, postId);
                 }
             }
         });
