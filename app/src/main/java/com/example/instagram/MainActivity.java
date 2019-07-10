@@ -99,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         bottomNavigationView.setSelectedItemId(R.id.action_home);
     }
 
-
     private void gotoLoginActivity() {
         Intent i = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(i);

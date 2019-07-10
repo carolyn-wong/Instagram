@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -191,8 +192,15 @@ public class ComposeFragment extends Fragment {
             public void done(ParseException e) {
                 if (e == null) {
                     Log.d("MainActivity", "Create post successful");
+                    Toast.makeText(getContext(), "New post successful!", Toast.LENGTH_SHORT).show();
                     etDescription.setText("");
                     ivPostPreview.setImageResource(0);
+                    Fragment timelineFragment = new TimelineFragment();
+                    FragmentManager transaction;
+                    transaction = getActivity().getSupportFragmentManager();
+                    transaction.beginTransaction()
+                            .replace(R.id.flContainer, timelineFragment)
+                            .commit();
                 } else {
                     Log.d("MainActivity", "Error while saving");
                     e.printStackTrace();

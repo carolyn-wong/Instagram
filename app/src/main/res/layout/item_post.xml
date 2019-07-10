@@ -22,7 +22,7 @@
         app:layout_constraintTop_toBottomOf="@+id/ivLike" />
 
     <TextView
-        android:id="@+id/tvDescription"
+        android:id="@+id/tvBody"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -64,7 +64,7 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/tvBody" />
 
     <ImageView
         android:id="@+id/ivLike"

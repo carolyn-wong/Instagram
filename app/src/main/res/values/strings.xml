@@ -15,4 +15,11 @@
     <string name="bottom_menu_home">Home</string>
     <string name="bottom_menu_compose">Compose</string>
     <string name="bottom_menu_profile">Profile</string>
+    <string name="comment_title">Comments</string>
+    <string name="comment_add">Add Comment</string>
+    <string name="comment_username">Username</string>
+    <string name="comment_description">Description</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
