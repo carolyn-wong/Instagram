@@ -1,7 +1,9 @@
 package com.example.instagram;
 
 import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.instagram.fragments.PostDetailsFragment;
 import com.example.instagram.models.Post;
 import com.example.instagram.models.TimeFormatter;
 import com.parse.ParseFile;
@@ -28,7 +31,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     // context defined as global variable so Glide in onBindViewHolder has access
     Context context;
 
-    // pass Tweets array in constructor
+    // pass Post array in constructor
     public PostAdapter(Context context, List<Post> posts) {
         this.context = context;
         this.posts = posts;
@@ -120,9 +123,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             if (position != RecyclerView.NO_POSITION) {
                 Log.d("PostAdapter", "View Post Details");
                 Post post = posts.get(position);
-                Intent intent = new Intent(context, PostDetailsActivity.class);
-                intent.putExtra("post_id", post.getObjectId());
-                context.startActivity(intent);
+
+                // send postId to details fragment
+                PostDetailsFragment postDetailsFragment = new PostDetailsFragment();
+                Bundle postIdBundle = new Bundle();
+                postIdBundle.putString("post_id", post.getObjectId());
+                postDetailsFragment.setArguments(postIdBundle);
+
+                // add to backstack so can press back button to return to timeline
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                FragmentManager transaction;
+                transaction = activity.getSupportFragmentManager();
+                transaction.beginTransaction()
+                        .replace(R.id.flContainer, postDetailsFragment, "postDetailsFragment")
+                        .addToBackStack("postDetailsFragment")
+                        .commit();
             }
         }
     }
