@@ -44,7 +44,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         // try to find item from cache, otherwise go to network
         query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK); // or CACHE_ONLY
-        // query for post with user
+        // query for post and include user info
         final Post.Query postQuery = new Post.Query();
         postQuery.withUser().getInBackground(postId, new GetCallback<Post>() {
             @Override
@@ -61,6 +61,7 @@ public class PostDetailsActivity extends AppCompatActivity {
                             .load(post.getUser().getParseFile(KEY_PROFILE_IMAGE).getUrl())
                             .apply(RequestOptions.circleCropTransform())
                             .into(ivProfileImage);
+                    MainActivity.setLikeStatus(ivLike, post);
                 }
                 else {
                     e.printStackTrace();
@@ -69,12 +70,14 @@ public class PostDetailsActivity extends AppCompatActivity {
             }
         });
 
+
+
         ivLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ivLike.isSelected()) {
                     ivLike.setSelected(false);
-//                    MainActivity.removeLike(postId);
+                    MainActivity.removeLike(postId);
                 } else {
                     ivLike.setSelected(true);
                     MainActivity.addLike(postId);
@@ -89,6 +92,7 @@ public class PostDetailsActivity extends AppCompatActivity {
             }
         });
     }
+
 
 
 }

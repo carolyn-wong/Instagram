@@ -82,7 +82,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
                     String postId = posts.get(position).getObjectId();
                     if (ivLike.isSelected()) {
                         ivLike.setSelected(false);
-//                        MainActivity.removeLike(postId);
+                        MainActivity.removeLike(postId);
                     } else {
                         ivLike.setSelected(true);
                         MainActivity.addLike(postId);
@@ -110,6 +110,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
                         .apply(RequestOptions.circleCropTransform())
                         .into(ivProfileImage);
             }
+            MainActivity.setLikeStatus(ivLike, post);
         }
 
         @Override

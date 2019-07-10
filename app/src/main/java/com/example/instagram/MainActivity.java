@@ -10,15 +10,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.instagram.fragments.ComposeFragment;
 import com.example.instagram.fragments.TimelineFragment;
 import com.example.instagram.fragments.UserTimelineFragment;
 import com.example.instagram.models.Post;
+import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.ParseUser;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -118,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     public static void removeLike(String postId) {
@@ -135,6 +140,28 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
+
+    public static void setLikeStatus(final View view, Post post) {
+        // create a relation based on the authors key
+        ParseRelation relation = post.getRelation("likes");
+        // query relation for user like
+        ParseQuery query = relation.getQuery();
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        query.whereEqualTo("objectId", currentUser.getObjectId());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> likes, ParseException e) {
+                if (e == null) {
+                    if (likes.size() != 0) {
+                        view.setSelected(true);
+                    } else {
+                        view.setSelected(false);
+                    }
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
 }

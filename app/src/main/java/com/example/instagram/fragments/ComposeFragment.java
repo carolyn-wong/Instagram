@@ -199,7 +199,6 @@ public class ComposeFragment extends Fragment {
                     return;
                 }
                 progressBar.setVisibility(View.INVISIBLE);
-
             }
         });
     }
