@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.instagram.fragments.ComposeFragment;
 import com.example.instagram.fragments.TimelineFragment;
@@ -143,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void setLikeStatus(final View view, Post post) {
-        // create a relation based on the authors key
+        // create a relation based on "likes" key
         ParseRelation relation = post.getRelation("likes");
         // query relation for user like
         ParseQuery query = relation.getQuery();
@@ -157,6 +158,22 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         view.setSelected(false);
                     }
+                } else {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public static void getNumLikes(final TextView view, Post post) {
+        // create a relation based on "likes" key
+        ParseRelation relation = post.getRelation("likes");
+        // query relation for user like
+        ParseQuery query = relation.getQuery();
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> likes, ParseException e) {
+                if (e == null) {
+                    view.setText(Integer.toString(likes.size()));
                 } else {
                     e.printStackTrace();
                 }

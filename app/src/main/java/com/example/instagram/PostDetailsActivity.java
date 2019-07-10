@@ -26,6 +26,7 @@ public class PostDetailsActivity extends AppCompatActivity {
     @BindView (R.id.tvUsername2) public TextView tvUsername2;
     @BindView (R.id.tvDescription) public TextView tvDescription;
     @BindView (R.id.tvCreatedAt) public TextView tvCreatedAt;
+    @BindView (R.id.tvNumLikes) public TextView tvNumLikes;
     @BindView (R.id.ivLike) ImageView ivLike;
     @BindView (R.id.ivComment) public ImageView ivComment;
     @BindView (R.id.ivDirect) public ImageView ivDirect;
@@ -62,6 +63,7 @@ public class PostDetailsActivity extends AppCompatActivity {
                             .apply(RequestOptions.circleCropTransform())
                             .into(ivProfileImage);
                     MainActivity.setLikeStatus(ivLike, post);
+                    MainActivity.getNumLikes(tvNumLikes, post);
                 }
                 else {
                     e.printStackTrace();
@@ -69,7 +71,6 @@ public class PostDetailsActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });
-
 
 
         ivLike.setOnClickListener(new View.OnClickListener() {
