@@ -116,10 +116,9 @@ public class TimelineFragment extends Fragment {
     // get date of oldest post
     protected Date getMaxDate() {
         int postsSize = mPosts.size();
-        if(postsSize == 0) {
-            return(new Date(0));
-        }
-        else {
+        if (postsSize == 0) {
+            return (new Date(0));
+        } else {
             Post oldest = mPosts.get(mPosts.size() - 1);
             return oldest.getCreatedAt();
         }

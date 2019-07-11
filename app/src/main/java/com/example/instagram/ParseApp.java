@@ -12,7 +12,6 @@ public class ParseApp extends Application {
     public void onCreate() {
         super.onCreate();
 
-
         // tell Parse that Post is a custom Parse model created to encapsulate data
         ParseObject.registerSubclass(Post.class);
         ParseObject.registerSubclass(Comment.class);

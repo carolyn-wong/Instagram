@@ -22,7 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
+public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
     private List<Post> posts;
     private final String KEY_PROFILE_IMAGE = "profileImage";
@@ -59,15 +59,24 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
 
     // create ViewHolder class
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView (R.id.ivProfileImage) public ImageView ivProfileImage;
-        @BindView (R.id.tvUsername) public TextView tvUsername;
-        @BindView (R.id.ivPostImage) public ImageView ivPostImage;
-        @BindView (R.id.tvUsername2) public TextView tvUsername2;
-        @BindView (R.id.tvBody) public TextView tvDescription;
-        @BindView (R.id.tvCreatedAt) public TextView tvCreatedAt;
-        @BindView (R.id.ivLike) public ImageView ivLike;
-        @BindView (R.id.ivComment) public ImageView ivComment;
-        @BindView (R.id.ivSave) public ImageView ivSave;
+        @BindView(R.id.ivProfileImage)
+        public ImageView ivProfileImage;
+        @BindView(R.id.tvUsername)
+        public TextView tvUsername;
+        @BindView(R.id.ivPostImage)
+        public ImageView ivPostImage;
+        @BindView(R.id.tvUsername2)
+        public TextView tvUsername2;
+        @BindView(R.id.tvBody)
+        public TextView tvDescription;
+        @BindView(R.id.tvCreatedAt)
+        public TextView tvCreatedAt;
+        @BindView(R.id.ivLike)
+        public ImageView ivLike;
+        @BindView(R.id.ivComment)
+        public ImageView ivComment;
+        @BindView(R.id.ivSave)
+        public ImageView ivSave;
 
         // constructor takes in inflated layout
         public ViewHolder(View itemView) {
@@ -141,21 +150,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
                 Intent intent = new Intent(context, PostDetailsActivity.class);
                 intent.putExtra("post_id", post.getObjectId());
                 context.startActivity(intent);
-
-//                // send postId to details fragment
-//                PostDetailsFragment postDetailsFragment = new PostDetailsFragment();
-//                Bundle postIdBundle = new Bundle();
-//                postIdBundle.putString("post_id", post.getObjectId());
-//                postDetailsFragment.setArguments(postIdBundle);
-//
-//                // add to backstack so can press back button to return to timeline
-//                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-//                FragmentManager transaction;
-//                transaction = activity.getSupportFragmentManager();
-//                transaction.beginTransaction()
-//                        .replace(R.id.flContainer, postDetailsFragment, "postDetailsFragment")
-//                        .addToBackStack("postDetailsFragment")
-//                        .commit();
             }
         }
     }

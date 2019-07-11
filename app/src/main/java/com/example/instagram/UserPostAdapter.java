@@ -18,7 +18,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.ViewHolder>{
+public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.ViewHolder> {
 
     private List<Post> posts;
     // context defined as global variable so Glide in onBindViewHolder has access
@@ -54,7 +54,8 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.ViewHo
 
     // create ViewHolder class
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        @BindView (R.id.ivPostImage) public ImageView ivPostImage;
+        @BindView(R.id.ivPostImage)
+        public ImageView ivPostImage;
 
         // constructor takes in inflated layout
         public ViewHolder(View itemView) {

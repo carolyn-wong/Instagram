@@ -37,9 +37,9 @@ public class LoginActivity extends AppCompatActivity {
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            final String username = etUsername.getText().toString();
-            final String password = etPassword.getText().toString();
-            login(username, password);
+                final String username = etUsername.getText().toString();
+                final String password = etPassword.getText().toString();
+                login(username, password);
             }
         });
 
@@ -66,8 +66,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                     // finish activity, otherwise user can login again by pressing back
                     finish();
-                }
-                else {
+                } else {
                     Log.e("LoginActivity", "Login failure");
                     e.printStackTrace();
                 }

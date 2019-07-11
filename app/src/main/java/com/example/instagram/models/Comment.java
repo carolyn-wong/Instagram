@@ -14,7 +14,9 @@ public class Comment extends ParseObject {
     public static final String KEY_CREATED_AT = "createdAt";
     public static final String KEY_POST = "post";
 
-    public String getBody() { return getString(KEY_BODY); }
+    public String getBody() {
+        return getString(KEY_BODY);
+    }
 
     public void setBody(String body) {
         put(KEY_BODY, body);

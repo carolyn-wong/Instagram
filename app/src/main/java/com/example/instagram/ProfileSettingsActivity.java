@@ -31,10 +31,14 @@ import butterknife.ButterKnife;
 
 public class ProfileSettingsActivity extends AppCompatActivity {
 
-    @BindView(R.id.btSetImage) Button btSetImage;
-    @BindView(R.id.btCamera) Button btCamera;
-    @BindView(R.id.ivProfileImage) ImageView ivProfileImage;
-    @BindView(R.id.progressBar) ProgressBar progressBar;
+    @BindView(R.id.btSetImage)
+    Button btSetImage;
+    @BindView(R.id.btCamera)
+    Button btCamera;
+    @BindView(R.id.ivProfileImage)
+    ImageView ivProfileImage;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
     public static final String KEY_PROFILE = "profileImage";
 
     private final String TAG = "ProfileSettingsActivity";
@@ -53,7 +57,6 @@ public class ProfileSettingsActivity extends AppCompatActivity {
             gotoLoginActivity();
         }
 
-        // TODO make snackbar so user can submit blank photo if they don't want to set a profile photo
         btSetImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -96,7 +99,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
         });
     }
 
-    public void launchCamera (View view) {
+    public void launchCamera(View view) {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         photoFile = getPhotoFileUri(photoFileName);
 
@@ -113,7 +116,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
     }
 
     // returns File for photo stored on disk given fileName
-    public File getPhotoFileUri (String fileName){
+    public File getPhotoFileUri(String fileName) {
         // get safe storage directory for photos
         // 'getExternalFileDir' on Context to access package-specific directories
         // so don't need to request external read/write runtime permissions
@@ -131,7 +134,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
 
     // called when camera app finishes
     @Override
-    protected void onActivityResult ( int requestCode, int resultCode, @Nullable Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == CAPTURE_IMAGE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 File takenPhotoUri = getPhotoFileUri(photoFileName);

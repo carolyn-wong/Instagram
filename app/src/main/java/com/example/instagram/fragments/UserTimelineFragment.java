@@ -18,6 +18,7 @@ import java.util.List;
 public class UserTimelineFragment extends TimelineFragment {
 
     private ProgressBar progressBar;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);

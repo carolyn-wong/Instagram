@@ -48,7 +48,7 @@ public class TimeFormatter {
                             + ", " + String.valueOf(then.get(Calendar.YEAR));
                 }
             }
-        }  catch (ParseException e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return time;
@@ -72,7 +72,7 @@ public class TimeFormatter {
 
             time = format1.format(date);
 
-        }  catch (ParseException e) {
+        } catch (ParseException e) {
             e.printStackTrace();
         }
         return time;

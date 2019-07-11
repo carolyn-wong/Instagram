@@ -33,7 +33,8 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView (R.id.bottom_navigation) BottomNavigationView bottomNavigationView;
+    @BindView(R.id.bottom_navigation)
+    BottomNavigationView bottomNavigationView;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

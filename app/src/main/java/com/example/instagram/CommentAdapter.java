@@ -16,7 +16,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder>{
+public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
 
     private List<Comment> comments;
     Context context;
@@ -51,8 +51,10 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     // create ViewHolder class
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView (R.id.tvCommentUsername) public TextView tvUsername;
-        @BindView (R.id.tvBody) public TextView tvDescription;
+        @BindView(R.id.tvCommentUsername)
+        public TextView tvUsername;
+        @BindView(R.id.tvBody)
+        public TextView tvDescription;
 
         // constructor takes in inflated layout
         public ViewHolder(View itemView) {
