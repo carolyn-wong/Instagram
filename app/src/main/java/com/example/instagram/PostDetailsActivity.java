@@ -227,6 +227,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         });
     }
 
+    // Source: https://alvinalexander.com/source-code/android-mockup-prototype-dialog-text-field
     private void showCommentDialog(Context context) {
         final EditText etComment = new EditText(context);
         AlertDialog dialog = new AlertDialog.Builder(context)
