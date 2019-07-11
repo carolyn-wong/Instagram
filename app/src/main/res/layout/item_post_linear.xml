@@ -90,17 +90,6 @@
         app:srcCompat="@drawable/ufi_comment" />
 
     <ImageView
-        android:id="@+id/ivDirect"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintStart_toEndOf="@+id/ivComment"
-        app:layout_constraintTop_toBottomOf="@+id/ivPostImage"
-        app:srcCompat="@drawable/ufi_new_direct" />
-
-    <ImageView
         android:id="@+id/ivSave"
         android:layout_width="20dp"
         android:layout_height="20dp"

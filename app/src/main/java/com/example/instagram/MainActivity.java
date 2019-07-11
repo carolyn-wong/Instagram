@@ -45,10 +45,6 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int menuId = item.getItemId();
         switch (menuId) {
-            case R.id.action_settings:
-                Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(settingsIntent);
-                return true;
             case R.id.profile_photo:
                 Intent profileIntent = new Intent(MainActivity.this, ProfileSettingsActivity.class);
                 startActivity(profileIntent);

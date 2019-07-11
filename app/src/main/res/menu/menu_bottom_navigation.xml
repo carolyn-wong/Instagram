@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    >
     <item
         android:id="@+id/action_home"
         android:enabled="true"
         android:icon="@drawable/instagram_home_outline_24"
         android:title="@string/bottom_menu_home"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"
+/>
     <item
         android:id="@+id/action_compose"
         android:enabled="true"
