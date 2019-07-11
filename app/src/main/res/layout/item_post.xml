@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/tvUsername2"
+        android:id="@+id/tvUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -37,7 +37,7 @@
         android:textColor="#14171A"
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/tvUsername2"
+        app:layout_constraintStart_toEndOf="@+id/tvUsername"
         app:layout_constraintTop_toBottomOf="@+id/ivLike" />
 
     <ImageView
@@ -57,11 +57,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="2dp"
         android:layout_marginBottom="16dp"
         android:text="@string/post_created"
         android:textColor="#657786"
-        android:textSize="12sp"
+        android:textSize="10sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvBody" />
@@ -123,7 +123,7 @@
         app:srcCompat="@android:color/darker_gray" />
 
     <TextView
-        android:id="@+id/tvUsername"
+        android:id="@+id/tvUsername2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

@@ -49,7 +49,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
 
     // create ViewHolder class
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @BindView (R.id.tvUsername) public TextView tvUsername;
+        @BindView (R.id.tvCommentUsername) public TextView tvUsername;
         @BindView (R.id.tvBody) public TextView tvDescription;
 
         // constructor takes in inflated layout

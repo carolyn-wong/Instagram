@@ -35,6 +35,9 @@ import butterknife.ButterKnife;
 
 public class PostDetailsActivity extends AppCompatActivity implements CommentFragment.CommentDialogListener {
 
+    // TODO RELOAD PAGE AFTER CREATING COMMENT TO MAKE IT APPEAR
+    // TODO EDIT COMMENT DIALOG TO MAKE IT PRETTY
+
     @BindView(R.id.ivProfileImage) public ImageView ivProfileImage;
     @BindView (R.id.tvUsername) public TextView tvUsername;
     @BindView (R.id.ivPostImage) public ImageView ivPostImage;
@@ -65,6 +68,41 @@ public class PostDetailsActivity extends AppCompatActivity implements CommentFra
 
         // edit to get arguments from the intent
         postId = getIntent().getStringExtra("post_id");
+
+        rvComments = (RecyclerView) findViewById(R.id.rvComment);
+        // initialize data source
+        mComments = new ArrayList<>();
+        // construct adapter from data source
+        commentAdapter = new CommentAdapter(this, mComments);
+        // RecyclerView setup
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        rvComments.setLayoutManager(linearLayoutManager);
+        rvComments.setAdapter(commentAdapter);
+
+        // retain instance so can call "resetStates" for fresh searches
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Date maxCommentId = getMaxDate();
+                Log.d("COMMENT DATE", maxCommentId.toString());
+                final Post.Query postQuery = new Post.Query();
+                postQuery.getInBackground(postId, new GetCallback<Post>() {
+                    @Override
+                    public void done(Post post, ParseException e) {
+                        if (e == null) {
+                            loadTopComments(getMaxDate(), post);
+                        }
+                        else {
+                            e.printStackTrace();
+                        }
+                        progressBar.setVisibility(View.INVISIBLE);
+                    }
+                });
+            }
+        };
+        // add endless scroll listener to RecyclerView
+        rvComments.addOnScrollListener(scrollListener);
+
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         // try to find item from cache, otherwise go to network
         query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK); // or CACHE_ONLY
@@ -88,6 +126,8 @@ public class PostDetailsActivity extends AppCompatActivity implements CommentFra
                             .into(ivProfileImage);
                     MainActivity.setLikeStatus(ivLike, post);
                     MainActivity.getNumLikes(tvNumLikes, post);
+                    loadTopComments(new Date(0), post);
+                    Log.d("PostDetailsActivity", "FIRST LOAD");
                 }
                 else {
                     e.printStackTrace();
@@ -115,52 +155,32 @@ public class PostDetailsActivity extends AppCompatActivity implements CommentFra
                 showAlertDialog();
             }
         });
-
-        rvComments = (RecyclerView) findViewById(R.id.rvComment);
-
-        // initialize data source
-        mComments = new ArrayList<>();
-        // construct adapter from data source
-        commentAdapter = new CommentAdapter(this, mComments);
-        // RecyclerView setup
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        rvComments.setLayoutManager(linearLayoutManager);
-        rvComments.setAdapter(commentAdapter);
-
-        loadTopComments(new Date(0));
-
-        // retain instance so can call "resetStates" for fresh searches
-        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                Date maxPostId = getMaxDate();
-                Log.d("COMMENT DATE", maxPostId.toString());
-                loadTopComments(getMaxDate());
-            }
-        };
-        // add endless scroll listener to RecyclerView
-        rvComments.addOnScrollListener(scrollListener);
     }
 
-    protected void loadTopComments(Date maxDate) {
+    protected void loadTopComments(Date maxDate, Post post) {
+        Log.d("PostDetailsActivity", "load top comments");
         progressBar.setVisibility(View.VISIBLE);
         final Comment.Query commentsQuery = new Comment.Query();
         // if opening app for the first time, get top 20 and clear old items
         // otherwise, query for posts older than the oldest
         if (maxDate.equals(new Date(0))) {
+            Log.d("PostDetailsActivity", "NEW DATE IS 0");
+            Log.d("PostDetailsActivity", postId);
             commentAdapter.clear();
-            commentsQuery.getTop().withUser().whereEqualTo(Comment.KEY_POST, postId);
+            commentsQuery.getTop().withUser().whereEqualTo(Comment.KEY_POST, post);
         } else {
-            commentsQuery.getOlder(maxDate).getTop().withUser().whereEqualTo(Comment.KEY_POST, postId);
+            commentsQuery.getOlder(maxDate).getTop().withUser().whereEqualTo(Comment.KEY_POST, post);
         }
 
         commentsQuery.findInBackground(new FindCallback<Comment>() {
             @Override
             public void done(List<Comment> objects, ParseException e) {
                 if (e == null) {
+                    Log.d("PostDetailsActivity", Integer.toString(objects.size()));
                     for (int i = 0; i < objects.size(); ++i) {
                         mComments.add(objects.get(i));
                         commentAdapter.notifyItemInserted(mComments.size() - 1);
+                        Log.d("PostDetailsActivity", "comment added");
                     }
                 } else {
                     e.printStackTrace();
