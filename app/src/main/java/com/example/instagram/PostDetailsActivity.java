@@ -173,6 +173,7 @@ public class PostDetailsActivity extends AppCompatActivity {
                     };
                     tvUsername.setOnClickListener(userClickListener);
                     tvUsername2.setOnClickListener(userClickListener);
+                    ivProfileImage.setOnClickListener(userClickListener);
                 }
                 else {
                     e.printStackTrace();

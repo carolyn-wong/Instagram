@@ -105,6 +105,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             // bring user to GridViewLayout timeline of user when clicking on usernames
             tvUsername.setOnClickListener(userClickListener);
             tvUsername2.setOnClickListener(userClickListener);
+            ivProfileImage.setOnClickListener(userClickListener);
         }
 
         public void bind(Post post) {
