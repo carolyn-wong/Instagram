@@ -1,21 +1,22 @@
 package com.example.instagram;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.instagram.models.Comment;
-import com.example.instagram.models.CommentFragment;
 import com.example.instagram.models.EndlessRecyclerViewScrollListener;
 import com.example.instagram.models.Post;
 import com.example.instagram.models.TimeFormatter;
@@ -34,10 +35,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class PostDetailsActivity extends AppCompatActivity implements CommentFragment.CommentDialogListener {
-
-    // TODO RELOAD PAGE AFTER CREATING COMMENT TO MAKE IT APPEAR
-    // TODO EDIT COMMENT DIALOG TO MAKE IT PRETTY
+public class PostDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.ivProfileImage) public ImageView ivProfileImage;
     @BindView (R.id.tvUsername) public TextView tvUsername;
@@ -156,7 +154,7 @@ public class PostDetailsActivity extends AppCompatActivity implements CommentFra
         ivComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAlertDialog();
+                showCommentDialog(PostDetailsActivity.this);
             }
         });
     }
@@ -206,7 +204,7 @@ public class PostDetailsActivity extends AppCompatActivity implements CommentFra
         }
     }
 
-    private void createComment(String body, Post post, ParseUser user) {
+    private void createComment(String body, final Post post, ParseUser user) {
         final Comment newComment = new Comment();
         newComment.setBody(body);
         newComment.setPost(post);
@@ -218,7 +216,7 @@ public class PostDetailsActivity extends AppCompatActivity implements CommentFra
             public void done(ParseException e) {
                 if (e == null) {
                     Log.d("PostDetailsActivity", "Create comment successful");
-                    Toast.makeText(PostDetailsActivity.this, "Comment added", Toast.LENGTH_SHORT).show();
+                    loadTopComments(new Date(0), post);
                 } else {
                     Log.d("PostDetailsActivity", "Error: unable to make comment");
                     e.printStackTrace();
@@ -229,14 +227,24 @@ public class PostDetailsActivity extends AppCompatActivity implements CommentFra
         });
     }
 
-    private void showAlertDialog() {
-        FragmentManager fm = getSupportFragmentManager();
-        CommentFragment commentDialog = CommentFragment.newInstance("Some title");
-        commentDialog.show(fm, "fragment_alert");
+    private void showCommentDialog(Context context) {
+        final EditText etComment = new EditText(context);
+        AlertDialog dialog = new AlertDialog.Builder(context)
+                .setTitle("Write a comment...")
+                .setView(etComment)
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String task = String.valueOf(etComment.getText());
+                        onFinishCommentDialog(task);
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
     }
 
-    @Override
-    public void onFinishEditDialog(final String inputText) {
+    private void onFinishCommentDialog(final String inputText) {
         final Post.Query postQuery = new Post.Query();
         postQuery.getInBackground(postId, new GetCallback<Post>() {
             @Override
