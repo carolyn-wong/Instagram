@@ -1,6 +1,7 @@
 package com.example.instagram;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.instagram.models.Comment;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -58,10 +60,22 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHold
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(Comment comment) {
+        public void bind(final Comment comment) {
             // populate views according to data
             tvUsername.setText(comment.getUser().getUsername());
             tvDescription.setText(comment.getBody());
+
+            View.OnClickListener userClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ParseUser user = comment.getUser();
+                    Intent intent = new Intent(context, UserTimelineActivity.class);
+                    intent.putExtra("user", user);
+                    context.startActivity(intent);
+                }
+            };
+
+            tvUsername.setOnClickListener(userClickListener);
         }
     }
 

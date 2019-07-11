@@ -69,7 +69,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         }
     }
 
-    @BindView(R.id.ivProfileImage) public ImageView ivProfileImage;
+    @BindView (R.id.ivProfileImage) public ImageView ivProfileImage;
     @BindView (R.id.tvUsername) public TextView tvUsername;
     @BindView (R.id.ivPostImage) public ImageView ivPostImage;
     @BindView (R.id.tvUsername2) public TextView tvUsername2;
@@ -89,6 +89,7 @@ public class PostDetailsActivity extends AppCompatActivity {
     protected ArrayList<Comment> mComments;
     RecyclerView rvComments;
     private EndlessRecyclerViewScrollListener scrollListener;
+    View.OnClickListener userClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,7 +98,6 @@ public class PostDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         progressBar.setVisibility(View.VISIBLE);
 
-        // edit to get arguments from the intent
         postId = getIntent().getStringExtra("post_id");
 
         rvComments = (RecyclerView) findViewById(R.id.rvComment);
@@ -141,7 +141,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         final Post.Query postQuery = new Post.Query();
         postQuery.withUser().getInBackground(postId, new GetCallback<Post>() {
             @Override
-            public void done(Post post, ParseException e) {
+            public void done(final Post post, ParseException e) {
                 if (e == null) {
                     displayPost = post;
                     tvUsername.setText(post.getUser().getUsername());
@@ -162,6 +162,18 @@ public class PostDetailsActivity extends AppCompatActivity {
                     MainActivity.getNumLikes(tvNumLikes, post);
                     loadTopComments(new Date(0), post);
                     Log.d("PostDetailsActivity", "FIRST LOAD");
+                    userClickListener = new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            ParseUser user = post.getUser();
+                            Intent intent = new Intent(PostDetailsActivity.this, UserTimelineActivity.class);
+                            intent.putExtra("user", user);
+                            startActivity(intent);
+                        }
+                    };
+                    tvUsername.setOnClickListener(userClickListener);
+                    tvUsername2.setOnClickListener(userClickListener);
+                    ivProfileImage.setOnClickListener(userClickListener);
                 }
                 else {
                     e.printStackTrace();
