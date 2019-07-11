@@ -2,12 +2,16 @@ package com.example.instagram;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -36,6 +40,34 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class PostDetailsActivity extends AppCompatActivity {
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.settings_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int menuId = item.getItemId();
+        switch (menuId) {
+            case R.id.action_settings:
+                Intent settingsIntent = new Intent(PostDetailsActivity.this, SettingsActivity.class);
+                startActivity(settingsIntent);
+                return true;
+            case R.id.profile_photo:
+                Intent profileIntent = new Intent(PostDetailsActivity.this, ProfileSettingsActivity.class);
+                startActivity(profileIntent);
+                return true;
+            case R.id.logout:
+                logoutUser();
+                gotoLoginActivity();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     @BindView(R.id.ivProfileImage) public ImageView ivProfileImage;
     @BindView (R.id.tvUsername) public TextView tvUsername;
@@ -259,5 +291,15 @@ public class PostDetailsActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.INVISIBLE);
             }
         });
+    }
+
+    private void logoutUser() {
+        ParseUser.logOut();
+    }
+
+    private void gotoLoginActivity() {
+        Intent i = new Intent(PostDetailsActivity.this, LoginActivity.class);
+        startActivity(i);
+        finish();
     }
 }
