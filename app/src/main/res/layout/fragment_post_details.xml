@@ -31,7 +31,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvNumLikes" />
 
             <TextView
-                android:id="@+id/tvDescription"
+                android:id="@+id/tvBody"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -39,17 +39,15 @@
                 android:layout_marginTop="6dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_marginBottom="25dp"
                 android:autoLink="all"
                 android:linksClickable="true"
                 android:text="@string/post_description"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="#14171A"
                 android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@+id/tvUsername2"
+                app:layout_constraintStart_toEndOf="@+id/tvCommentUsername"
                 app:layout_constraintTop_toBottomOf="@+id/tvNumLikes" />
 
             <ImageView
@@ -69,12 +67,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="2dp"
                 android:text="@string/post_created"
                 android:textColor="#657786"
-                android:textSize="12sp"
+                android:textSize="10sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+                app:layout_constraintTop_toBottomOf="@+id/tvBody" />
 
             <ImageView
                 android:id="@+id/ivLike"
@@ -100,17 +98,6 @@
                 app:srcCompat="@drawable/ufi_comment" />
 
             <ImageView
-                android:id="@+id/ivDirect"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="12dp"
-                app:layout_constraintStart_toEndOf="@+id/ivComment"
-                app:layout_constraintTop_toBottomOf="@+id/ivPostImage"
-                app:srcCompat="@drawable/ufi_new_direct" />
-
-            <ImageView
                 android:id="@+id/ivSave"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -133,7 +120,7 @@
                 app:srcCompat="@android:color/darker_gray" />
 
             <TextView
-                android:id="@+id/tvUsername"
+                android:id="@+id/tvUsername2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -173,6 +160,34 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/tvNumLikes"
                 app:layout_constraintTop_toBottomOf="@+id/ivLike" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvCommentTitle" />
+
+            <TextView
+                android:id="@+id/tvCommentTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/comment_title"
+                android:textColor="#14171A"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvCreatedAt" />
 
         </android.support.constraint.ConstraintLayout>
 
