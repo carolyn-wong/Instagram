@@ -33,7 +33,9 @@ import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 import butterknife.BindView;
@@ -142,36 +144,22 @@ public class ComposeFragment extends Fragment {
                 // load image into a preview
                 ivPostPreview.setImageBitmap(resizedBitmap);
 
-                // TODO fix saving smaller bitmap to disk
-//                // write smaller bitmap back to disk
-//                // Configure byte output stream
-//                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-//                // Compress the image further
-//                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
-//                // Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
-//                File resizedFile = getPhotoFileUri(photoFileName + "_resized");
-//                try {
-//                    resizedFile.createNewFile();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                FileOutputStream fos = null;
-//                try {
-//                    fos = new FileOutputStream(resizedFile);
-//                } catch (FileNotFoundException e) {
-//                    e.printStackTrace();
-//                }
-//                // Write the bytes of the bitmap to file
-//                try {
-//                    fos.write(bytes.toByteArray());
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//                try {
-//                    fos.close();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
+                // write smaller bitmap back to disk
+                // Configure byte output stream
+                ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+                // Compress the image further
+                resizedBitmap.compress(Bitmap.CompressFormat.JPEG, 40, bytes);
+                // Create a new file for the resized bitmap (`getPhotoFileUri` defined above)
+                File resizedFile = getPhotoFileUri(photoFileName + "_resized");
+                try {
+                    resizedFile.createNewFile();
+                    FileOutputStream fos = null;
+                    fos = new FileOutputStream(resizedFile);
+                    fos.write(bytes.toByteArray());
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
             // result failed
             else {

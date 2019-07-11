@@ -35,7 +35,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
     @BindView(R.id.btCamera) Button btCamera;
     @BindView(R.id.ivProfileImage) ImageView ivProfileImage;
     @BindView(R.id.progressBar) ProgressBar progressBar;
-    private static final String KEY_PROFILE = "profileImage";
+    public static final String KEY_PROFILE = "profileImage";
 
     private final String TAG = "ProfileSettingsActivity";
     public final static int CAPTURE_IMAGE_REQUEST_CODE = 1;
@@ -76,7 +76,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
         });
     }
 
-    private void saveProfilePhoto (File photoFile, ParseUser user) {
+    private void saveProfilePhoto(File photoFile, ParseUser user) {
         user.put(KEY_PROFILE, new ParseFile(photoFile));
         progressBar.setVisibility(View.VISIBLE);
 

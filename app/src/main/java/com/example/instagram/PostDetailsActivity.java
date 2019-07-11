@@ -22,6 +22,7 @@ import com.example.instagram.models.TimeFormatter;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
@@ -120,10 +121,13 @@ public class PostDetailsActivity extends AppCompatActivity implements CommentFra
                     Glide.with(getApplicationContext())
                             .load(post.getImage().getUrl())
                             .into(ivPostImage);
-                    Glide.with(getApplicationContext())
-                            .load(post.getUser().getParseFile(KEY_PROFILE_IMAGE).getUrl())
-                            .apply(RequestOptions.circleCropTransform())
-                            .into(ivProfileImage);
+                    ParseFile profileImage = post.getUser().getParseFile(KEY_PROFILE_IMAGE);
+                    if (profileImage != null) {
+                        Glide.with(getApplicationContext())
+                                .load(profileImage.getUrl())
+                                .apply(RequestOptions.circleCropTransform())
+                                .into(ivProfileImage);
+                    }
                     MainActivity.setLikeStatus(ivLike, post);
                     MainActivity.getNumLikes(tvNumLikes, post);
                     loadTopComments(new Date(0), post);

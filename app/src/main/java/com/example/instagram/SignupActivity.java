@@ -21,13 +21,14 @@ public class SignupActivity extends AppCompatActivity {
     private Button btSignUp;
     private String username;
     private String password;
+    private String KEY_PROFILE = "profileImage";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        tvUsername = (TextView) findViewById(R.id.tvCommentUsername);
+        tvUsername = (TextView) findViewById(R.id.tvUsername);
         tvPassword = (TextView) findViewById(R.id.tvPassword);
         tvEmail = (TextView) findViewById(R.id.tvEmail);
         btSignUp = (Button) findViewById(R.id.btSignUp);
@@ -41,7 +42,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void signUpUser() {
-        ParseUser user = new ParseUser();
+        final ParseUser user = new ParseUser();
 
         username = tvUsername.getText().toString();
         password = tvPassword.getText().toString();
@@ -54,6 +55,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
+
                     // let user use app
                     ParseUser.logInInBackground(username, password, new LogInCallback() {
                         @Override
