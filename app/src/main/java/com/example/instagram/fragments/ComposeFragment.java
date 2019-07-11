@@ -53,7 +53,6 @@ public class ComposeFragment extends Fragment {
 
     @BindView (R.id.etDescription) EditText etDescription;
     @BindView (R.id.btSetImage) Button btPost;
-    @BindView (R.id.btCamera) Button btCamera;
     @BindView (R.id.progressBar) ProgressBar progressBar;
     @BindView (R.id.ivPostPreview) ImageView ivPostPreview;
 
@@ -64,19 +63,15 @@ public class ComposeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_compose, container, false);
         unbinder = ButterKnife.bind(this, view);
+
+        launchCamera();
+
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        btCamera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchCamera(v);
-            }
-        });
 
         btPost.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -93,7 +88,7 @@ public class ComposeFragment extends Fragment {
         });
     }
 
-    public void launchCamera(View view) {
+    public void launchCamera() {
         // create intent to take pic and return control to calling app
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // create File reference for future access

@@ -67,7 +67,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
         @BindView (R.id.tvCreatedAt) public TextView tvCreatedAt;
         @BindView (R.id.ivLike) public ImageView ivLike;
         @BindView (R.id.ivComment) public ImageView ivComment;
-        @BindView (R.id.ivDirect) public ImageView ivDirect;
         @BindView (R.id.ivSave) public ImageView ivSave;
 
         // constructor takes in inflated layout
