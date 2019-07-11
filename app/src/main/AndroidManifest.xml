@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ProfileSettingsActivity"></activity>
+        <activity android:name=".UserTimelineActivity"></activity>
+        <activity android:name=".ProfileSettingsActivity" />
         <activity android:name=".PostDetailsActivity" />
         <activity
             android:name=".SettingsActivity"
@@ -26,8 +27,7 @@
                 android:value=".MainActivity" />
         </activity>
         <activity android:name=".SignupActivity" />
-        <activity
-            android:name=".MainActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

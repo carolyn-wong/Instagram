@@ -69,7 +69,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         }
     }
 
-    @BindView(R.id.ivProfileImage) public ImageView ivProfileImage;
+    @BindView (R.id.ivProfileImage) public ImageView ivProfileImage;
     @BindView (R.id.tvUsername) public TextView tvUsername;
     @BindView (R.id.ivPostImage) public ImageView ivPostImage;
     @BindView (R.id.tvUsername2) public TextView tvUsername2;
@@ -97,7 +97,6 @@ public class PostDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         progressBar.setVisibility(View.VISIBLE);
 
-        // edit to get arguments from the intent
         postId = getIntent().getStringExtra("post_id");
 
         rvComments = (RecyclerView) findViewById(R.id.rvComment);

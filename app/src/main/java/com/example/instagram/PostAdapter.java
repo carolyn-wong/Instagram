@@ -15,6 +15,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.instagram.models.Post;
 import com.example.instagram.models.TimeFormatter;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int ViewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View postView = inflater.inflate(R.layout.item_post, parent, false);
+        View postView = inflater.inflate(R.layout.item_post_linear, parent, false);
         return new ViewHolder(postView);
     }
 
@@ -89,6 +90,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
                     }
                 }
             });
+
+            View.OnClickListener userClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getAdapterPosition();
+                    ParseUser user = posts.get(position).getUser();
+                    Intent intent = new Intent(context, UserTimelineActivity.class);
+                    intent.putExtra("user", user);
+                    context.startActivity(intent);
+                }
+            };
+
+            // bring user to GridViewLayout timeline of user when clicking on usernames
+            tvUsername.setOnClickListener(userClickListener);
+            tvUsername2.setOnClickListener(userClickListener);
         }
 
         public void bind(Post post) {
@@ -101,6 +117,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
             if (postImage != null) {
                 Glide.with(context)
                         .load(postImage.getUrl())
+                        .centerCrop()
                         .into(ivPostImage);
             }
             ParseFile profileImage = post.getUser().getParseFile(KEY_PROFILE_IMAGE);
