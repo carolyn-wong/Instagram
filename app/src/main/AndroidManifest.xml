@@ -13,7 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/statusBarStyle"
         android:usesCleartextTraffic="true">
         <activity android:name=".UserTimelineActivity"></activity>
         <activity android:name=".ProfileSettingsActivity" />

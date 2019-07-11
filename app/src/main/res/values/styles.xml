@@ -17,4 +17,18 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="statusBarStyle" parent="Theme.AppCompat.Light">
+        <item name="android:statusBarColor">@color/light_gray</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+
+    <!--<style name="BottomNavigation">-->
+        <!--<item name="itemIconTint">@color/colorPrimary</item>-->
+        <!--<item name="itemTextColor">@color/colorPrimary</item>-->
+        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+        <!--<item name="android:textColorSecondary">@color/colorAccent</item>-->
+    <!--</style>-->
+
+
 </resources>
