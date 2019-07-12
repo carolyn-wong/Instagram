@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.instagram.adapters.CommentAdapter;
 import com.example.instagram.models.Comment;
 import com.example.instagram.models.EndlessRecyclerViewScrollListener;
 import com.example.instagram.models.Post;

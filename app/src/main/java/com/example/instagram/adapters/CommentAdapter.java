@@ -1,4 +1,4 @@
-package com.example.instagram;
+package com.example.instagram.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.instagram.R;
+import com.example.instagram.UserTimelineActivity;
 import com.example.instagram.models.Comment;
 import com.parse.ParseUser;
 

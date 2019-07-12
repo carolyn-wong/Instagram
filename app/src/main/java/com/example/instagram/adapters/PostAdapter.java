@@ -1,4 +1,4 @@
-package com.example.instagram;
+package com.example.instagram.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.instagram.MainActivity;
+import com.example.instagram.PostDetailsActivity;
+import com.example.instagram.R;
+import com.example.instagram.UserTimelineActivity;
 import com.example.instagram.models.Post;
 import com.example.instagram.models.TimeFormatter;
 import com.parse.ParseFile;

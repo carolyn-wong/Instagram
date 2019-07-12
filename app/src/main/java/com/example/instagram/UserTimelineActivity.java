@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.example.instagram.adapters.UserPostAdapter;
 import com.example.instagram.models.EndlessRecyclerViewScrollListener;
 import com.example.instagram.models.Post;
 import com.parse.FindCallback;

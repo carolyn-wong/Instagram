@@ -1,4 +1,4 @@
-package com.example.instagram;
+package com.example.instagram.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.instagram.PostDetailsActivity;
+import com.example.instagram.R;
 import com.example.instagram.models.Post;
 import com.parse.ParseFile;
 

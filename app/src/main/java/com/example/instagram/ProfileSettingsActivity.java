@@ -70,7 +70,6 @@ public class ProfileSettingsActivity extends AppCompatActivity {
             }
         });
 
-
         btCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,6 +88,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
                 if (e == null) {
                     Log.d("ProfileSettingsActivity", "Profile photo change successful");
                     Toast.makeText(ProfileSettingsActivity.this, "Photo successfully changed!", Toast.LENGTH_SHORT).show();
+                    finish();
                 } else {
                     Log.d("ProfileSettingsActivity", "Error while saving");
                     e.printStackTrace();
@@ -148,8 +148,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
                 ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
                 ivProfileImage.setImageBitmap(resizedBitmap);
 
-                // TODO fix image rotation
-                // TODO fix saving smaller bitmap to disk
+                // fix saving smaller bitmap to disk
 //                // write smaller bitmap back to disk
 //                // Configure byte output stream
 //                ByteArrayOutputStream bytes = new ByteArrayOutputStream();

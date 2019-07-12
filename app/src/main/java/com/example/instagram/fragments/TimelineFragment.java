@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
-import com.example.instagram.PostAdapter;
+import com.example.instagram.adapters.PostAdapter;
 import com.example.instagram.R;
 import com.example.instagram.models.EndlessRecyclerViewScrollListener;
 import com.example.instagram.models.Post;

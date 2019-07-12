@@ -18,14 +18,6 @@
         <activity android:name=".UserTimelineActivity"></activity>
         <activity android:name=".ProfileSettingsActivity" />
         <activity android:name=".PostDetailsActivity" />
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/action_settings"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
         <activity android:name=".SignupActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity">
