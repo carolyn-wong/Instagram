@@ -21,7 +21,6 @@ public class SignupActivity extends AppCompatActivity {
     private Button btSignUp;
     private String username;
     private String password;
-    private String KEY_PROFILE = "profileImage";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

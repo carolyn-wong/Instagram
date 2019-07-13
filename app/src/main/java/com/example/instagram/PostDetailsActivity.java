@@ -22,9 +22,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.instagram.adapters.CommentAdapter;
 import com.example.instagram.models.Comment;
-import com.example.instagram.models.EndlessRecyclerViewScrollListener;
+import com.example.instagram.utils.EndlessRecyclerViewScrollListener;
 import com.example.instagram.models.Post;
-import com.example.instagram.models.TimeFormatter;
+import com.example.instagram.utils.TimeFormatter;
 import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -67,27 +67,27 @@ public class PostDetailsActivity extends AppCompatActivity {
     }
 
     @BindView(R.id.ivProfileImage)
-    public ImageView ivProfileImage;
+    ImageView ivProfileImage;
     @BindView(R.id.tvUsername)
-    public TextView tvUsername;
+    TextView tvUsername;
     @BindView(R.id.ivPostImage)
-    public ImageView ivPostImage;
+    ImageView ivPostImage;
     @BindView(R.id.tvUsername2)
-    public TextView tvUsername2;
+    TextView tvUsername2;
     @BindView(R.id.tvBody)
-    public TextView tvDescription;
+    TextView tvDescription;
     @BindView(R.id.tvCreatedAt)
-    public TextView tvCreatedAt;
+    TextView tvCreatedAt;
     @BindView(R.id.tvNumLikes)
-    public TextView tvNumLikes;
+    TextView tvNumLikes;
     @BindView(R.id.ivLike)
     ImageView ivLike;
     @BindView(R.id.ivComment)
-    public ImageView ivComment;
+    ImageView ivComment;
     @BindView(R.id.ivSave)
-    public ImageView ivSave;
+    ImageView ivSave;
     @BindView(R.id.progressBar)
-    public ProgressBar progressBar;
+    ProgressBar progressBar;
 
     private final String KEY_PROFILE_IMAGE = "profileImage";
     private String postId;
@@ -95,9 +95,9 @@ public class PostDetailsActivity extends AppCompatActivity {
     // initialize adapter, views, scroll listener
     protected CommentAdapter commentAdapter;
     protected ArrayList<Comment> mComments;
-    RecyclerView rvComments;
+    private RecyclerView rvComments;
     private EndlessRecyclerViewScrollListener scrollListener;
-    View.OnClickListener userClickListener;
+    private View.OnClickListener userClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

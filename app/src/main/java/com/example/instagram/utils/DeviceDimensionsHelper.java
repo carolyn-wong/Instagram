@@ -1,4 +1,4 @@
-package com.example.instagram.models;
+package com.example.instagram.utils;
 
 import android.content.Context;
 import android.content.res.Resources;

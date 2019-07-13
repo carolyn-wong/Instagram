@@ -25,8 +25,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.instagram.R;
-import com.example.instagram.models.BitmapScaler;
-import com.example.instagram.models.DeviceDimensionsHelper;
+import com.example.instagram.utils.BitmapScaler;
+import com.example.instagram.utils.DeviceDimensionsHelper;
 import com.example.instagram.models.Post;
 import com.parse.ParseException;
 import com.parse.ParseFile;

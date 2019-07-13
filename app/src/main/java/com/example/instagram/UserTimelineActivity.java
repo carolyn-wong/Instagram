@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.instagram.adapters.UserPostAdapter;
-import com.example.instagram.models.EndlessRecyclerViewScrollListener;
+import com.example.instagram.utils.EndlessRecyclerViewScrollListener;
 import com.example.instagram.models.Post;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -32,7 +32,7 @@ public class UserTimelineActivity extends AppCompatActivity {
     // initialize adapter, views, scroll listener
     protected UserPostAdapter postAdapter;
     protected ArrayList<Post> mPosts;
-    RecyclerView rvPosts;
+    private RecyclerView rvPosts;
     protected SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
     private ProgressBar progressBar;

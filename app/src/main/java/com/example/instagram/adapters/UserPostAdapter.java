@@ -24,7 +24,7 @@ public class UserPostAdapter extends RecyclerView.Adapter<UserPostAdapter.ViewHo
 
     private List<Post> posts;
     // context defined as global variable so Glide in onBindViewHolder has access
-    Context context;
+    private Context context;
 
     // pass Post array in constructor
     public UserPostAdapter(Context context, List<Post> posts) {

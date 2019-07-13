@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.ViewHolder> {
 
     private List<Comment> comments;
-    Context context;
+    private Context context;
 
     // pass Comment array in constructor
     public CommentAdapter(Context context, List<Comment> comments) {

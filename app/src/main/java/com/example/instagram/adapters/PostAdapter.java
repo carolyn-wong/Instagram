@@ -17,7 +17,7 @@ import com.example.instagram.PostDetailsActivity;
 import com.example.instagram.R;
 import com.example.instagram.UserTimelineActivity;
 import com.example.instagram.models.Post;
-import com.example.instagram.models.TimeFormatter;
+import com.example.instagram.utils.TimeFormatter;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 
@@ -31,7 +31,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
     private List<Post> posts;
     private final String KEY_PROFILE_IMAGE = "profileImage";
     // context defined as global variable so Glide in onBindViewHolder has access
-    Context context;
+    private Context context;
 
     // pass Post array in constructor
     public PostAdapter(Context context, List<Post> posts) {

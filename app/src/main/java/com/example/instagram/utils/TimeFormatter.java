@@ -1,4 +1,4 @@
-package com.example.instagram.models;
+package com.example.instagram.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

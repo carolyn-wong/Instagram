@@ -17,8 +17,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.instagram.models.BitmapScaler;
-import com.example.instagram.models.DeviceDimensionsHelper;
+import com.example.instagram.utils.BitmapScaler;
+import com.example.instagram.utils.DeviceDimensionsHelper;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -39,7 +39,7 @@ public class ProfileSettingsActivity extends AppCompatActivity {
     ImageView ivProfileImage;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
-    public static final String KEY_PROFILE = "profileImage";
+    private static final String KEY_PROFILE = "profileImage";
 
     private final String TAG = "ProfileSettingsActivity";
     public final static int CAPTURE_IMAGE_REQUEST_CODE = 1;
